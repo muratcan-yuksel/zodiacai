@@ -47,7 +47,7 @@ const ZodiacSign = ({ image }) => {
           height={250}
         />
       </motion.div>
-      <p style={{ width: "250px" }}>
+      <p style={{ width: "250px", marginTop: "1rem" }}>
         {readMore ? text : `${text.substring(0, 80)}...`}
         <button className="btn" onClick={() => setReadMore(!readMore)}>
           {readMore ? "show less" : "  read more"}
