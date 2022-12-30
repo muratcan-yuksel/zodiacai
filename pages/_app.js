@@ -1,12 +1,18 @@
 import "bootstrap/dist/css/bootstrap.min.css"; // Import bootstrap CSS
 import "../styles/globals.css";
 import { useEffect } from "react";
+import { Andika } from "@next/font/google";
+const font = Andika({ weight: "400", subsets: ["latin"] });
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
     require("bootstrap/dist/js/bootstrap.bundle.min.js");
   }, []);
-  return <Component {...pageProps} />;
+  return (
+    <main className={font.className}>
+      <Component {...pageProps} />
+    </main>
+  );
 }
 
 export default MyApp;
