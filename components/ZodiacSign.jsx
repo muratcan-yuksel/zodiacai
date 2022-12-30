@@ -12,6 +12,7 @@ import scorpio from "../assets/scorpiosign.jpg";
 import taurus from "../assets/taurussign.jpg";
 import virgo from "../assets/virgosign.jpg";
 import cancer from "../assets/cancersign.jpg";
+import { motion } from "framer-motion";
 
 const ZodiacSign = ({ image }) => {
   const [readMore, setReadMore] = useState(false);
@@ -34,10 +35,18 @@ const ZodiacSign = ({ image }) => {
     // add more images here
   };
   const src = images[image];
-  console.log(image);
   return (
     <div className="d-flex flex-column justify-content-center align-items-center">
-      <Image src={src} alt="leo" width={250} height={250} />
+      <h2>{image.charAt(0).toUpperCase() + image.slice(1)} </h2>
+      <motion.div whileHover={{ scale: 1.2 }} transition={{ duration: 0.5 }}>
+        <Image
+          style={{ border: "1px solid gray", padding: "10px" }}
+          src={src}
+          alt="leo"
+          width={250}
+          height={250}
+        />
+      </motion.div>
       <p style={{ width: "250px" }}>
         {readMore ? text : `${text.substring(0, 80)}...`}
         <button className="btn" onClick={() => setReadMore(!readMore)}>
