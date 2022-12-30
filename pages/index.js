@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import ZodiacSign from "../components/ZodiacSign";
 import Header from "../components/Header";
+import Navbar from "../components/Navbar";
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -16,54 +17,55 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
+        <Navbar />
         <Header />
-        <div class="container">
+        <div className="container">
           <div className="row">
-            <div style={{ width: "auto" }} class="col">
+            <div style={{ width: "auto" }} className="col">
               {" "}
               <ZodiacSign image="aries" />
             </div>
-            <div style={{ width: "auto" }} class="col">
+            <div style={{ width: "auto" }} className="col">
               {" "}
               <ZodiacSign image="taurus" />
             </div>
-            <div style={{ width: "auto" }} class="col">
+            <div style={{ width: "auto" }} className="col">
               {" "}
               <ZodiacSign image="gemini" />
             </div>{" "}
-            <div style={{ width: "auto" }} class="col">
+            <div style={{ width: "auto" }} className="col">
               {" "}
               <ZodiacSign image="cancer" />
             </div>{" "}
-            <div style={{ width: "auto" }} class="col">
+            <div style={{ width: "auto" }} className="col">
               {" "}
               <ZodiacSign image="leo" />
             </div>{" "}
-            <div style={{ width: "auto" }} class="col">
+            <div style={{ width: "auto" }} className="col">
               {" "}
               <ZodiacSign image="virgo" />
             </div>
-            <div style={{ width: "auto" }} class="col">
+            <div style={{ width: "auto" }} className="col">
               {" "}
               <ZodiacSign image="libra" />
             </div>{" "}
-            <div style={{ width: "auto" }} class="col">
+            <div style={{ width: "auto" }} className="col">
               {" "}
               <ZodiacSign image="scorpio" />
             </div>{" "}
-            <div style={{ width: "auto" }} class="col">
+            <div style={{ width: "auto" }} className="col">
               {" "}
               <ZodiacSign image="sagittarius" />
             </div>{" "}
-            <div style={{ width: "auto" }} class="col">
+            <div style={{ width: "auto" }} className="col">
               {" "}
               <ZodiacSign image="capricorn" />
             </div>{" "}
-            <div style={{ width: "auto" }} class="col">
+            <div style={{ width: "auto" }} className="col">
               {" "}
               <ZodiacSign image="aquarius" />
             </div>{" "}
-            <div style={{ width: "auto" }} class="col">
+            <div style={{ width: "auto" }} className="col">
               {" "}
               <ZodiacSign image="pisces" />
             </div>
