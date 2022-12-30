@@ -15,18 +15,20 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}></main>
-      <div class="d-flex flex-wrap bd-highlight mb-3">
-        <div class="p-2 bd-highlight">
-          {" "}
-          <ZodiacSign image="leo" /> 1
-        </div>
-        <div class="p-2 bd-highlight">
-          {" "}
-          <ZodiacSign image="leo" /> 1
-        </div>
-        <div class="p-2 bd-highlight">
-          {" "}
-          <ZodiacSign image="leo" /> 1
+      <div class="container">
+        <div className="row">
+          <div style={{ width: "auto" }} class="col">
+            {" "}
+            <ZodiacSign image="leo" />
+          </div>
+          <div style={{ width: "auto" }} class="col">
+            {" "}
+            <ZodiacSign image="aires" />
+          </div>
+          <div style={{ width: "auto" }} class="col">
+            {" "}
+            <ZodiacSign image="leo" />
+          </div>
         </div>
       </div>
 
