@@ -19,15 +19,51 @@ export default function Home() {
         <div className="row">
           <div style={{ width: "auto" }} class="col">
             {" "}
-            <ZodiacSign image="leo" />
+            <ZodiacSign image="aries" />
           </div>
           <div style={{ width: "auto" }} class="col">
             {" "}
-            <ZodiacSign image="aires" />
+            <ZodiacSign image="taurus" />
           </div>
           <div style={{ width: "auto" }} class="col">
             {" "}
+            <ZodiacSign image="gemini" />
+          </div>{" "}
+          <div style={{ width: "auto" }} class="col">
+            {" "}
+            <ZodiacSign image="cancer" />
+          </div>{" "}
+          <div style={{ width: "auto" }} class="col">
+            {" "}
             <ZodiacSign image="leo" />
+          </div>{" "}
+          <div style={{ width: "auto" }} class="col">
+            {" "}
+            <ZodiacSign image="virgo" />
+          </div>
+          <div style={{ width: "auto" }} class="col">
+            {" "}
+            <ZodiacSign image="libra" />
+          </div>{" "}
+          <div style={{ width: "auto" }} class="col">
+            {" "}
+            <ZodiacSign image="scorpio" />
+          </div>{" "}
+          <div style={{ width: "auto" }} class="col">
+            {" "}
+            <ZodiacSign image="sagittarius" />
+          </div>{" "}
+          <div style={{ width: "auto" }} class="col">
+            {" "}
+            <ZodiacSign image="capricorn" />
+          </div>{" "}
+          <div style={{ width: "auto" }} class="col">
+            {" "}
+            <ZodiacSign image="aquarius" />
+          </div>{" "}
+          <div style={{ width: "auto" }} class="col">
+            {" "}
+            <ZodiacSign image="pisces" />
           </div>
         </div>
       </div>

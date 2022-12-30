@@ -1,7 +1,17 @@
 import React, { useState } from "react";
-import leo from "../assets/leosign.jpg";
-import aires from "../assets/airessign.jpg";
 import Image from "next/image";
+import leo from "../assets/leosign.jpg";
+import aries from "../assets/ariessign.jpg";
+import aquarius from "../assets/aquariessign.jpg";
+import capricorn from "../assets/capricornsign.jpg";
+import gemini from "../assets/geminisign.jpg";
+import libra from "../assets/librasign.jpg";
+import pisces from "../assets/piscessign.jpg";
+import sagittarius from "../assets/sagittariussign.jpg";
+import scorpio from "../assets/scorpiosign.jpg";
+import taurus from "../assets/taurussign.jpg";
+import virgo from "../assets/virgosign.jpg";
+import cancer from "../assets/cancersign.jpg";
 
 const ZodiacSign = ({ image }) => {
   const [readMore, setReadMore] = useState(false);
@@ -9,7 +19,18 @@ const ZodiacSign = ({ image }) => {
     " Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius adipisci atque inventore totam dignissimos itaque animi ullam delectus fugiat consequuntur quod, libero veniam, blanditiis voluptate sint maiores assumenda laborum id. ";
   const images = {
     leo: leo,
-    aires: aires,
+    aries: aries,
+    aquarius: aquarius,
+    capricorn: capricorn,
+    gemini: gemini,
+    libra: libra,
+    pisces: pisces,
+    sagittarius: sagittarius,
+    scorpio: scorpio,
+    taurus: taurus,
+    virgo: virgo,
+    cancer: cancer,
+
     // add more images here
   };
   const src = images[image];
