@@ -5,7 +5,7 @@ export async function checkout({ lineItems }) {
 
   const getStripe = () => {
     if (!stripePromise) {
-      stripePromise = loadStripe(process.env.STRIPE_API_KEY);
+      stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_API_KEY);
     }
     return stripePromise;
   };
@@ -19,8 +19,8 @@ export async function checkout({ lineItems }) {
     cancelUrl: `${window.location.origin}`,
   });
 
-  //   return {
-  //     statusCode: 200,
-  //     body: JSON.stringify({ message: "Success" }),
-  //   };
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ message: "Success" }),
+  };
 }
