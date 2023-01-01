@@ -10,7 +10,7 @@ const Form = () => {
           checkout({
             lineItems: [
               {
-                price: "price_1MLHWTLMVMm28wM01tfe0aDD",
+                price: process.env.NEXT_PUBLIC_PRODUCT_PRICE,
                 quantity: 1,
               },
             ],
