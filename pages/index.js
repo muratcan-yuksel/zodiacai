@@ -4,6 +4,17 @@ import styles from "../styles/Home.module.css";
 import ZodiacSign from "../components/ZodiacSign";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
+import ActionCall from "../components/ActionCall";
+import Form from "../components/Form";
+// import dotenv from "dotenv";
+// const paypal = require("paypal-rest-sdk");
+
+// paypal.configure({
+//   mode: "sandbox", // Set to 'sandbox' to test transactions in the sandbox environment
+//   client_id: process.env.CLIENT_ID,
+//   client_secret: process.env.APP_SECRET,
+// });
+
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -71,6 +82,8 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <ActionCall />
+        <Form />
       </main>
       {/* <footer className={styles.footer}>
         <a

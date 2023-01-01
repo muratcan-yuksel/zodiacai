@@ -40,7 +40,11 @@ const ZodiacSign = ({ image }) => {
       <h2>{image.charAt(0).toUpperCase() + image.slice(1)} </h2>
       <motion.div whileHover={{ scale: 1.2 }} transition={{ duration: 0.5 }}>
         <Image
-          style={{ border: "1px solid gray", padding: "10px" }}
+          style={{
+            border: "1px solid gray",
+            padding: "10px",
+            boxShadow: "0 0 10px gray",
+          }}
           src={src}
           alt="leo"
           width={250}
