@@ -25,11 +25,22 @@ const Form = () => {
     }
   }
 
+  //get users
+  async function handleGetUsers() {
+    try {
+      const response = await axios.get("/api/userController");
+      console.log("hyyyyy" + response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div>
       Buy product:
       <button onClick={handleBuy}>BUY!</button>
       <button onClick={handleCustomerPortal}>Customer Portal</button>
+      <button onClick={handleGetUsers}>Get Users</button>
     </div>
   );
 };

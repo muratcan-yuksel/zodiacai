@@ -21,6 +21,8 @@
     "fs": "^0.0.1-security",
     "micro": "^10.0.1",
     "micro-cors": "^0.1.1",
+    "mongodb": "^4.13.0",
+    "mongoose": "^6.8.2",
     "next": "13.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
