@@ -22,8 +22,8 @@ export default async function createCheckoutSession(req, res) {
     payment_method_types: ["card"],
 
     line_items: [{ price: process.env.NEXT_PUBLIC_PRICE, quantity: 1 }],
-    success_url: `http://localhost:4242/success.html?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `http://localhost:4242/cancel.html?session_id={CHECKOUT_SESSION_ID}`,
+    success_url: `http://localhost:3000/mypage?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `http://localhost:3000/mypage?session_id={CHECKOUT_SESSION_ID}`,
   });
   console.log(session);
 
