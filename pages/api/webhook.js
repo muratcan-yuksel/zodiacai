@@ -1,18 +1,22 @@
 // import Stripe from "stripe";
 import { buffer } from "micro";
 import Cors from "micro-cors";
-
+import addUser from "./addUser";
 const stripe = require("stripe")(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 const webhookSecret = process.env.NEXT_PUBLIC_WEBHOOK_SECRET_KEY;
+import axios from "axios";
+import { parse } from "dotenv";
 
 const returnedData = {
   checkoutSession: {
+    fired: false,
     //takes "complete" if completed
     status: "",
     //takes "paid" if paid
     paymentStatus: "",
   },
   customer: {
+    fired: false,
     //customer id
     id: "",
     //customer name
@@ -25,6 +29,7 @@ const returnedData = {
     delinquent: "",
   },
   invoice: {
+    fired: false,
     //invoice id
     id: "",
     //invoice date
@@ -45,6 +50,7 @@ const returnedData = {
     paid: "",
   },
   charge: {
+    fired: false,
     //amount_captured
     amount_captured: "",
     //paid-boolean
@@ -57,6 +63,7 @@ const returnedData = {
     status: "",
   },
   subscription: {
+    fired: false,
     //subscription id
     id: "",
     //subscription status
@@ -122,6 +129,7 @@ const webhookHandler = async (req, res) => {
         // Payment is successful and the subscription is created.
         // You should provision the subscription and save the customer ID to your database.
         const checkoutSession = data.object;
+        returnedData.checkoutSession.fired = true;
         returnedData.checkoutSession.status = checkoutSession.status;
         returnedData.checkoutSession.paymentStatus =
           checkoutSession.payment_status;
@@ -133,6 +141,7 @@ const webhookHandler = async (req, res) => {
         // Store the status in your database and check when a user accesses your service.
         // This approach helps you avoid hitting rate limits.
         const invoice = data.object;
+        returnedData.invoice.fired = true;
         returnedData.invoice.id = invoice.id;
         returnedData.invoice.date = parseDate(invoice.created);
         returnedData.invoice.amount = invoice.amount_paid;
@@ -150,6 +159,7 @@ const webhookHandler = async (req, res) => {
         // The subscription becomes past_due. Notify your customer and send them to the
         // customer portal to update their payment information.
         const failedInvoice = data.object;
+        returnedData.invoice.fired = true;
         returnedData.invoice.id = failedInvoice.id;
         returnedData.invoice.date = parseDate(failedInvoice.created);
         returnedData.invoice.amount = failedInvoice.amount_paid;
@@ -166,6 +176,7 @@ const webhookHandler = async (req, res) => {
         break;
       case "customer.created":
         const customer = data.object;
+        returnedData.customer.fired = true;
         returnedData.customer.id = customer.id;
         returnedData.customer.createdAt = parseDate(customer.created);
         returnedData.customer.email = customer.email;
@@ -174,18 +185,31 @@ const webhookHandler = async (req, res) => {
         returnedData.customer.delinquent = customer.delinquent;
 
         console.log(customer);
+        try {
+          const res = await axios.post("http://localhost:3000/api/addUser", {
+            customerId: customer.id,
+            email: customer.email,
+            name: customer.name,
+            createdAt: parseDate(customer.created),
+            delinquent: customer.delinquent,
+          });
+          console.log(res);
+        } catch (err) {
+          console.log(err);
+        }
 
+        console.log(parseDate(customer.created));
         break;
 
       case "charge.captured":
         const charge = data.object;
-        // Then define and call a function to handle the event charge.captured
-        console.log(charge);
+        returnedData.charge.fired = true;
         returnedData.charge.amount_captured = charge.amount_captured;
         returnedData.charge.paid = charge.paid;
         returnedData.charge.type = charge.payment_method_details.type;
         returnedData.charge.receipt_url = charge.receipt_url;
         returnedData.charge.status = charge.status;
+        console.log(charge);
         break;
       case "customer.subscription.deleted":
         // handle subscription cancelled automatically based
@@ -193,6 +217,7 @@ const webhookHandler = async (req, res) => {
         // cancels it.
         //will send emaiil to customer
         const subscription = data.object;
+        returnedData.subscription.fired = true;
         returnedData.subscription.status = subscription.status;
         returnedData.subscription.id = subscription.id;
         returnedData.subscription.canceled_at = parseDate(
@@ -218,11 +243,30 @@ const webhookHandler = async (req, res) => {
     res.setHeader("Allow", "POST");
     res.status(405).end("Method Not Allowed");
   }
-  //function here
-  console.log(
-    "this is the returned data" + returnedData.checkoutSession.status,
-    returnedData.customer.id
-  );
+  //call database functions here
+  returnedData.customer.fired &&
+    console.log("this is the returned data", returnedData.customer.id);
+  // let counter = 0;
+
+  // function logCount() {
+  //   counter++;
+  //   console.log(`This function has been called ${counter} time(s).`);
+  // }
+  // logCount();
+  // console.log("this is the returned data", returnedData);
+  //send a post request to addUser in api/addUser.js
+  // try {
+  //   const res = await axios.post("http://localhost:3000/api/addUser", {
+  //     customerId: returnedData.customer.id,
+  //     email: returnedData.customer.email,
+  //     name: returnedData.customer.name,
+  //     // createdAt: returnedData.customer.createdAt,
+  //     // delinquent: returnedData.customer.delinquent,
+  //   });
+  //   console.log(res);
+  // } catch (err) {
+  //   console.log(err);
+  // }
 };
 
 export default cors(webhookHandler);

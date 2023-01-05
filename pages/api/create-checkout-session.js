@@ -3,20 +3,12 @@ const stripe = require("stripe")(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 
 export default async function createCheckoutSession(req, res) {
   //these will be taken by form
-  const { name, email } = req.body;
+  // const { name, email } = req.body;
   const customer = await stripe.customers.create({
-    email: "custome222r@example.com",
-    name: "John Smith",
-    address: {
-      line1: "123 Main Street",
-      city: "New York",
-      state: "NY",
-      postal_code: "10001",
-      country: "US",
-    },
-    description: "My customer",
+    email: "delln@example.com",
+    name: "Stan Smith",
   });
-  console.log(customer);
+  // console.log(customer);
 
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
@@ -27,7 +19,7 @@ export default async function createCheckoutSession(req, res) {
     success_url: `http://localhost:3000/mypage?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `http://localhost:3000/mypage?session_id={CHECKOUT_SESSION_ID}`,
   });
-  console.log(session);
+  // console.log(session);
 
   res.send(session.url);
 }
