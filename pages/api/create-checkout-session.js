@@ -6,7 +6,7 @@ export default async function createCheckoutSession(req, res) {
   // const { name, email } = req.body;
   const customer = await stripe.customers.create({
     email: "delln@example.com",
-    name: "Stan Smith",
+    name: "Hayley Smith",
   });
   // console.log(customer);
 

@@ -185,18 +185,18 @@ const webhookHandler = async (req, res) => {
         returnedData.customer.delinquent = customer.delinquent;
 
         console.log(customer);
-        try {
-          const res = await axios.post("http://localhost:3000/api/addUser", {
-            customerId: customer.id,
-            email: customer.email,
-            name: customer.name,
-            createdAt: parseDate(customer.created),
-            delinquent: customer.delinquent,
-          });
-          console.log(res);
-        } catch (err) {
-          console.log(err);
-        }
+        // try {
+        //   const res = await axios.post("http://localhost:3000/api/addUser", {
+        //     customerId: customer.id,
+        //     email: customer.email,
+        //     name: customer.name,
+        //     createdAt: parseDate(customer.created),
+        //     delinquent: customer.delinquent,
+        //   });
+        //   console.log(res);
+        // } catch (err) {
+        //   console.log(err);
+        // }
 
         console.log(parseDate(customer.created));
         break;
@@ -267,6 +267,21 @@ const webhookHandler = async (req, res) => {
   // } catch (err) {
   //   console.log(err);
   // }
+
+  try {
+    const res = await axios.post("http://localhost:3000/api/addUser", {
+      customerId: returnedData.customer.id,
+      email: returnedData.customer.email,
+      name: returnedData.customer.name,
+      createdAt: returnedData.customer.createdAt,
+      delinquent: returnedData.customer.delinquent,
+    });
+    console.log(res);
+    console.log("addd meeeeee");
+  } catch (err) {
+    console.log(err);
+  }
+  console.log("log me " + returnedData.customer.name);
 };
 
 export default cors(webhookHandler);
