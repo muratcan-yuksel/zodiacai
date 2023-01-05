@@ -5,6 +5,73 @@ import Cors from "micro-cors";
 const stripe = require("stripe")(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 const webhookSecret = process.env.NEXT_PUBLIC_WEBHOOK_SECRET_KEY;
 
+const returnedData = {
+  checkoutSession: {
+    //takes "complete" if completed
+    status: "",
+    //takes "paid" if paid
+    paymentStatus: "",
+  },
+  customer: {
+    //customer id
+    id: "",
+    //customer name
+    name: "",
+    //customer email
+    email: "",
+    //created at
+    createdAt: "",
+    //boolean
+    delinquent: "",
+  },
+  invoice: {
+    //invoice id
+    id: "",
+    //invoice date
+    date: "",
+    //invoice amount
+    amount: "",
+    //invoice currency
+    currency: "",
+    //invoice customer id
+    customer: "",
+    //url
+    hosted_invoice_url: "",
+    //pdf
+    invoice_pdf: "",
+    //status- takes paid if paid, takes open if not
+    status: "",
+    //paid- boolean
+    paid: "",
+  },
+  charge: {
+    //amount_captured
+    amount_captured: "",
+    //paid-boolean
+    paid: "",
+    //takes card for example
+    type: "",
+    //receipt url
+    receipt_url: "",
+    //status- takes succeeded if succeeded
+    status: "",
+  },
+  subscription: {
+    //subscription id
+    id: "",
+    //subscription status
+    //gives cancelled if cancelled
+    status: "",
+    //subscription plan
+    //takes object
+    plan: {},
+    //subscription start date
+    start_date: "",
+    //cancel date
+    canceled_at: "",
+  },
+};
+
 const parseDate = (timeStamp) => new Date(timeStamp * 1000).toLocaleString();
 
 // Stripe requires the raw body to construct the event.
@@ -55,16 +122,10 @@ const webhookHandler = async (req, res) => {
         // Payment is successful and the subscription is created.
         // You should provision the subscription and save the customer ID to your database.
         const checkoutSession = data.object;
+        returnedData.checkoutSession.status = checkoutSession.status;
+        returnedData.checkoutSession.paymentStatus =
+          checkoutSession.payment_status;
         console.log(checkoutSession);
-        console.log(checkoutSession.customer);
-        //session id
-        console.log(checkoutSession.id);
-        //currency
-        console.log(checkoutSession.currency);
-        //amount
-        console.log(checkoutSession.amount_total);
-        //subscription id
-        console.log(checkoutSession.subscription);
 
         break;
       case "invoice.paid":
@@ -72,61 +133,59 @@ const webhookHandler = async (req, res) => {
         // Store the status in your database and check when a user accesses your service.
         // This approach helps you avoid hitting rate limits.
         const invoice = data.object;
+        returnedData.invoice.id = invoice.id;
+        returnedData.invoice.date = parseDate(invoice.created);
+        returnedData.invoice.amount = invoice.amount_paid;
+        returnedData.invoice.currency = invoice.currency;
+        returnedData.invoice.customer = invoice.customer;
+        returnedData.invoice.hosted_invoice_url = invoice.hosted_invoice_url;
+        returnedData.invoice.invoice_pdf = invoice.invoice_pdf;
+        returnedData.invoice.status = invoice.status;
+        returnedData.invoice.paid = invoice.paid;
         console.log(invoice);
-        //date
-        console.log(parseDate(invoice.created));
-        //amount paid
-        console.log(invoice.amount_paid);
-        //currency
-        console.log(invoice.currency);
-        //customer id
-        console.log(invoice.customer);
-        //subscription id
-        console.log(invoice.subscription);
-        //invoice url
-        console.log(invoice.hosted_invoice_url);
-        //invoice pdf
-        console.log(invoice.invoice_pdf);
+
         break;
       case "invoice.payment_failed":
         // The payment failed or the customer does not have a valid payment method.
         // The subscription becomes past_due. Notify your customer and send them to the
         // customer portal to update their payment information.
         const failedInvoice = data.object;
+        returnedData.invoice.id = failedInvoice.id;
+        returnedData.invoice.date = parseDate(failedInvoice.created);
+        returnedData.invoice.amount = failedInvoice.amount_paid;
+        returnedData.invoice.currency = failedInvoice.currency;
+        returnedData.invoice.customer = failedInvoice.customer;
+        returnedData.invoice.hosted_invoice_url =
+          failedInvoice.hosted_invoice_url;
+        returnedData.invoice.invoice_pdf = failedInvoice.invoice_pdf;
+        returnedData.invoice.status = failedInvoice.status;
+        returnedData.invoice.paid = failedInvoice.paid;
+
         console.log(failedInvoice);
-        //date
-        console.log(parseDate(failedInvoice.created));
-        //customer id
-        console.log(failedInvoice.customer);
-        //subscription id
-        console.log(failedInvoice.subscription);
-        //customer name
-        console.log(failedInvoice.customer_name);
-        //customer email
-        console.log(failedInvoice.customer_email);
-        //invoice url
-        console.log(failedInvoice.hosted_invoice_url);
-        //invoice pdf
-        console.log(failedInvoice.invoice_pdf);
+
         break;
       case "customer.created":
         const customer = data.object;
+        returnedData.customer.id = customer.id;
+        returnedData.customer.createdAt = parseDate(customer.created);
+        returnedData.customer.email = customer.email;
+        returnedData.customer.name = customer.name;
+        //delinquent
+        returnedData.customer.delinquent = customer.delinquent;
+
         console.log(customer);
-        // Then define and call a function to handle the event customer.created
-        //customer id
-        console.log(customer.id);
-        //date
-        console.log(parseDate(customer.created));
-        //email
-        console.log(customer.email);
-        //name
-        console.log(customer.name);
+
         break;
 
       case "charge.captured":
         const charge = data.object;
         // Then define and call a function to handle the event charge.captured
         console.log(charge);
+        returnedData.charge.amount_captured = charge.amount_captured;
+        returnedData.charge.paid = charge.paid;
+        returnedData.charge.type = charge.payment_method_details.type;
+        returnedData.charge.receipt_url = charge.receipt_url;
+        returnedData.charge.status = charge.status;
         break;
       case "customer.subscription.deleted":
         // handle subscription cancelled automatically based
@@ -134,13 +193,18 @@ const webhookHandler = async (req, res) => {
         // cancels it.
         //will send emaiil to customer
         const subscription = data.object;
+        returnedData.subscription.status = subscription.status;
+        returnedData.subscription.id = subscription.id;
+        returnedData.subscription.canceled_at = parseDate(
+          subscription.canceled_at
+        );
+        returnedData.subscription.customer = subscription.customer;
+        //start date
+        returnedData.subscription.start_date = parseDate(
+          subscription.start_date
+        );
         console.log(subscription);
-        //date
-        console.log(parseDate(subscription.canceled_at));
-        //customer id
-        console.log(subscription.customer);
-        //subscription id
-        console.log(subscription.id);
+
         break;
 
       default:
@@ -154,6 +218,11 @@ const webhookHandler = async (req, res) => {
     res.setHeader("Allow", "POST");
     res.status(405).end("Method Not Allowed");
   }
+  //function here
+  console.log(
+    "this is the returned data" + returnedData.checkoutSession.status,
+    returnedData.customer.id
+  );
 };
 
 export default cors(webhookHandler);
