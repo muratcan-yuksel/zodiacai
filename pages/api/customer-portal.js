@@ -7,7 +7,7 @@ export default async function customerPortal(req, res) {
   const customerPortalSession = await stripe.billingPortal.sessions.create({
     //this customer id should be in the email I send to the customer
     //and be accessible in the button in that email
-    customer: "cus_N6DKzD6eBh9kbb",
+    customer: "cus_N7J0U4PzfXeCmv",
   });
   // Redirect the customer to the customer portal
   res.send(customerPortalSession.url);

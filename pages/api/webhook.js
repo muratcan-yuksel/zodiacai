@@ -156,22 +156,10 @@ const webhookHandler = async (req, res) => {
         //subscriotion id
         returnedData.invoice.subscription = invoice.subscription;
         console.log(invoice);
+        //send an email to the customer once it's done
 
         break;
-      // case "invoice.payment_succeeded":
-      //   // Used to provision services after the trial has ended.
-      //   // The status of the invoice will show up as paid. Store the status in your database.
-      //   // This approach helps you avoid hitting rate limits.
-      //   const paymentSucceededInvoice = data.object;
-      //   returnedData.invoice.fired = true;
-      //   returnedData.invoice.id = paymentSucceededInvoice.id;
-      //   returnedData.invoice.date = parseDate(paymentSucceededInvoice.created);
-      //   returnedData.invoice.amount = paymentSucceededInvoice.amount_paid;
-      //   returnedData.invoice.currency = paymentSucceededInvoice.currency;
-      //   returnedData.invoice.customer = paymentSucceededInvoice.customer;
-      //   console.log("invoice fired payment succceeeded");
 
-      //   break;
       case "invoice.payment_failed":
         // The payment failed or the customer does not have a valid payment method.
         // The subscription becomes past_due. Notify your customer and send them to the
@@ -203,19 +191,6 @@ const webhookHandler = async (req, res) => {
         returnedData.customer.delinquent = customer.delinquent;
 
         console.log(customer);
-        // try {
-        //   const res = await axios.post("http://localhost:3000/api/addUser", {
-        //     customerId: customer.id,
-        //     email: customer.email,
-        //     name: customer.name,
-        //     createdAt: parseDate(customer.created),
-        //     delinquent: customer.delinquent,
-        //   });
-        //   console.log(res);
-        // } catch (err) {
-        //   console.log(err);
-        // }
-
         console.log(parseDate(customer.created));
         break;
 
@@ -229,24 +204,25 @@ const webhookHandler = async (req, res) => {
         returnedData.charge.status = charge.status;
         console.log(charge);
         break;
+      //don't know if it works
       case "customer.subscription.deleted":
         // handle subscription cancelled automatically based
         // upon your subscription settings. Or if the user
         // cancels it.
         //will send emaiil to customer
-        // const subscription = data.object;
-        // returnedData.subscription.fired = true;
-        // returnedData.subscription.status = subscription.status;
-        // returnedData.subscription.id = subscription.id;
-        // returnedData.subscription.canceled_at = parseDate(
-        //   subscription.canceled_at
-        // );
-        // returnedData.subscription.customer = subscription.customer;
-        // //start date
-        // returnedData.subscription.start_date = parseDate(
-        //   subscription.start_date
-        // );
-        console.log(subscription);
+        const deletedSubscription = data.object;
+        try {
+          const res = await axios.patch(
+            "http://localhost:3000/api/deleteUser",
+            {
+              customerId: deletedSubscription.customer,
+            }
+          );
+          returnedData.invoice.fired = false;
+        } catch (err) {
+          console.log(err);
+        }
+
         break;
       case "customer.subscription.created":
         const subscription = data.object;
