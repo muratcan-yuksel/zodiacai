@@ -5,8 +5,8 @@ export default async function createCheckoutSession(req, res) {
   //these will be taken by form
   // const { name, email } = req.body;
   const customer = await stripe.customers.create({
-    email: "delln@example.com",
-    name: "Hayley Smith",
+    email: "sadasdsadsadsadsadsa@example.com",
+    name: "mine Smith",
   });
   // console.log(customer);
 
@@ -14,7 +14,6 @@ export default async function createCheckoutSession(req, res) {
     mode: "subscription",
     customer: customer.id, // Associate the subscription with the customer
     payment_method_types: ["card"],
-
     line_items: [{ price: process.env.NEXT_PUBLIC_PRICE, quantity: 1 }],
     success_url: `http://localhost:3000/mypage?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `http://localhost:3000/mypage?session_id={CHECKOUT_SESSION_ID}`,

@@ -48,6 +48,8 @@ const returnedData = {
     status: "",
     //paid- boolean
     paid: "",
+    //subcription id
+    subscription: "",
   },
   charge: {
     fired: false,
@@ -151,9 +153,25 @@ const webhookHandler = async (req, res) => {
         returnedData.invoice.invoice_pdf = invoice.invoice_pdf;
         returnedData.invoice.status = invoice.status;
         returnedData.invoice.paid = invoice.paid;
+        //subscriotion id
+        returnedData.invoice.subscription = invoice.subscription;
         console.log(invoice);
 
         break;
+      // case "invoice.payment_succeeded":
+      //   // Used to provision services after the trial has ended.
+      //   // The status of the invoice will show up as paid. Store the status in your database.
+      //   // This approach helps you avoid hitting rate limits.
+      //   const paymentSucceededInvoice = data.object;
+      //   returnedData.invoice.fired = true;
+      //   returnedData.invoice.id = paymentSucceededInvoice.id;
+      //   returnedData.invoice.date = parseDate(paymentSucceededInvoice.created);
+      //   returnedData.invoice.amount = paymentSucceededInvoice.amount_paid;
+      //   returnedData.invoice.currency = paymentSucceededInvoice.currency;
+      //   returnedData.invoice.customer = paymentSucceededInvoice.customer;
+      //   console.log("invoice fired payment succceeeded");
+
+      //   break;
       case "invoice.payment_failed":
         // The payment failed or the customer does not have a valid payment method.
         // The subscription becomes past_due. Notify your customer and send them to the
@@ -216,20 +234,28 @@ const webhookHandler = async (req, res) => {
         // upon your subscription settings. Or if the user
         // cancels it.
         //will send emaiil to customer
+        // const subscription = data.object;
+        // returnedData.subscription.fired = true;
+        // returnedData.subscription.status = subscription.status;
+        // returnedData.subscription.id = subscription.id;
+        // returnedData.subscription.canceled_at = parseDate(
+        //   subscription.canceled_at
+        // );
+        // returnedData.subscription.customer = subscription.customer;
+        // //start date
+        // returnedData.subscription.start_date = parseDate(
+        //   subscription.start_date
+        // );
+        console.log(subscription);
+        break;
+      case "customer.subscription.created":
         const subscription = data.object;
         returnedData.subscription.fired = true;
         returnedData.subscription.status = subscription.status;
         returnedData.subscription.id = subscription.id;
-        returnedData.subscription.canceled_at = parseDate(
-          subscription.canceled_at
-        );
-        returnedData.subscription.customer = subscription.customer;
-        //start date
-        returnedData.subscription.start_date = parseDate(
-          subscription.start_date
-        );
         console.log(subscription);
-
+        // Then define and call a function to handle the event customer.subscription.created
+        console.log("subscripton created");
         break;
 
       default:
@@ -246,41 +272,40 @@ const webhookHandler = async (req, res) => {
   //call database functions here
   returnedData.customer.fired &&
     console.log("this is the returned data", returnedData.customer.id);
-  // let counter = 0;
+  //fire this function if customer is created
 
-  // function logCount() {
-  //   counter++;
-  //   console.log(`This function has been called ${counter} time(s).`);
-  // }
-  // logCount();
-  // console.log("this is the returned data", returnedData);
-  //send a post request to addUser in api/addUser.js
-  // try {
-  //   const res = await axios.post("http://localhost:3000/api/addUser", {
-  //     customerId: returnedData.customer.id,
-  //     email: returnedData.customer.email,
-  //     name: returnedData.customer.name,
-  //     // createdAt: returnedData.customer.createdAt,
-  //     // delinquent: returnedData.customer.delinquent,
-  //   });
-  //   console.log(res);
-  // } catch (err) {
-  //   console.log(err);
-  // }
-
-  try {
-    const res = await axios.post("http://localhost:3000/api/addUser", {
-      customerId: returnedData.customer.id,
-      email: returnedData.customer.email,
-      name: returnedData.customer.name,
-      createdAt: returnedData.customer.createdAt,
-      delinquent: returnedData.customer.delinquent,
-    });
-    console.log(res);
-    console.log("addd meeeeee");
-  } catch (err) {
-    console.log(err);
+  if (returnedData.customer.fired) {
+    try {
+      const res = await axios.post("http://localhost:3000/api/addUser", {
+        customerId: returnedData.customer.id,
+        email: returnedData.customer.email,
+        name: returnedData.customer.name,
+        createdAt: returnedData.customer.createdAt,
+        delinquent: returnedData.customer.delinquent,
+      });
+      // console.log(res);
+      console.log("addd meeeeee");
+      returnedData.customer.fired = false;
+    } catch (err) {
+      console.log(err);
+    }
   }
+
+  if (returnedData.invoice.fired) {
+    //update user with subscription id, subscription status, paid
+    try {
+      const res = await axios.patch("http://localhost:3000/api/updateUser", {
+        customerId: returnedData.invoice.customer,
+        subscriptionId: returnedData.invoice.subscription,
+        subscriptionStatus: returnedData.invoice.status,
+        paid: returnedData.invoice.paid,
+      });
+      returnedData.invoice.fired = false;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   console.log("log me " + returnedData.customer.name);
 };
 
