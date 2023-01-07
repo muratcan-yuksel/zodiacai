@@ -43,7 +43,7 @@ const ZodiacSign = ({ image }) => {
         <Image
           className={styles.image}
           src={src}
-          alt="leo"
+          alt={src}
           width={150}
           height={150}
         />

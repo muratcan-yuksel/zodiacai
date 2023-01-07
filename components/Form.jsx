@@ -213,7 +213,7 @@ const MyForm = () => {
             </div>
             <div>
               <p style={{ marginBottom: "2px", marginTop: "1rem" }}>
-                Time o Birth
+                Time of Birth
               </p>
               <MyTextInput
                 className={styles.borderRadius}

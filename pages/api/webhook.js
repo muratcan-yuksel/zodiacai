@@ -7,6 +7,9 @@ const webhookSecret = process.env.NEXT_PUBLIC_WEBHOOK_SECRET_KEY;
 import axios from "axios";
 import { parse } from "dotenv";
 import getZodiacSign from "../../utils/getSign";
+const Mutex = require("async-mutex").Mutex;
+
+const dataMutex = new Mutex();
 
 let formValues = {
   firstName: "",
@@ -150,6 +153,23 @@ const webhookHandler = async (req, res) => {
           checkoutSession.payment_status;
         console.log(checkoutSession);
 
+        const releaseTwo = await dataMutex.acquire();
+        try {
+          // Use the `data` variable
+
+          await axios.post("http://localhost:3000/api/sendMail", {
+            name: checkoutSession.customer_details.name,
+            email: checkoutSession.customer_details.email,
+            subject: "Welcome to ZodiacAI",
+            message: "your bits are ready",
+          });
+        } catch (err) {
+          console.log(err);
+        } finally {
+          // console.log(data);
+          releaseTwo();
+        }
+
         break;
       case "invoice.paid":
         // Continue to provision the subscription as payments continue to be made.
@@ -170,6 +190,14 @@ const webhookHandler = async (req, res) => {
         returnedData.invoice.subscription = invoice.subscription;
         console.log(invoice);
         //send an email to the customer once it's done
+        // sendMail(invoice.customer_email, "horoscope", "your daily bite");
+        if (
+          returnedData.customer.name == "" &&
+          returnedData.customer.email == ""
+        ) {
+          returnedData.customer.name = invoice.customer_name;
+          returnedData.customer.email = invoice.customer_email;
+        }
 
         break;
 
@@ -213,6 +241,16 @@ const webhookHandler = async (req, res) => {
 
         console.log(customer);
         console.log(parseDate(customer.created));
+
+        const releaseOne = await dataMutex.acquire();
+        try {
+          // Process the request and save the relevant data to the `data` variable
+          returnedData.customer.email = customer.email;
+          returnedData.customer.name = customer.name;
+        } finally {
+          releaseOne();
+        }
+
         break;
 
       case "charge.captured":
@@ -272,26 +310,29 @@ const webhookHandler = async (req, res) => {
   //fire this function if customer is created
 
   if (returnedData.customer.fired) {
-    try {
-      const res = await axios.post("http://localhost:3000/api/addUser", {
-        customerId: returnedData.customer.id,
-        email: returnedData.customer.email,
-        name: returnedData.customer.name,
-        createdAt: returnedData.customer.createdAt,
-        delinquent: returnedData.customer.delinquent,
-        birthDate: returnedData.customer.birthDate.slice(0, 10),
-        timeOfBirth: returnedData.customer.timeOfBirth,
-        birthLocation: returnedData.customer.birthLocation,
-        sign: getZodiacSign(
-          returnedData.customer.birthDate.slice(0, 10).toString(),
-          returnedData.customer.timeOfBirth.toString()
-        ),
-      });
-      // console.log(res);
-      console.log("addd meeeeee");
-      returnedData.customer.fired = false;
-    } catch (err) {
-      console.log(err);
+    //if it's undefined, the slice function will create an error
+    if (returnedData.customer.birthDate !== undefined) {
+      try {
+        const res = await axios.post("http://localhost:3000/api/addUser", {
+          customerId: returnedData.customer.id,
+          email: returnedData.customer.email,
+          name: returnedData.customer.name,
+          createdAt: returnedData.customer.createdAt,
+          delinquent: returnedData.customer.delinquent,
+          birthDate: returnedData.customer.birthDate.slice(0, 10),
+          timeOfBirth: returnedData.customer.timeOfBirth,
+          birthLocation: returnedData.customer.birthLocation,
+          sign: getZodiacSign(
+            returnedData.customer.birthDate.slice(0, 10).toString(),
+            returnedData.customer.timeOfBirth.toString()
+          ),
+        });
+        // console.log(res);
+        console.log("addd meeeeee");
+        returnedData.customer.fired = false;
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 
