@@ -143,42 +143,44 @@ const MyForm = () => {
       <button onClick={handleCustomerPortal}>Customer Portal</button>
       <button onClick={handleGetUsers}>Get Users</button> */}
         {/* <h1>Subscribe!</h1> */}
-        <MyTextInput
-          label="First Name"
-          name="firstName"
-          type="text"
-          placeholder="Jane"
-        />
-
-        <MyTextInput
-          label="Last Name"
-          name="lastName"
-          type="text"
-          placeholder="Doe"
-        />
-
-        <MyTextInput
-          label="Email Address"
-          name="email"
-          type="email"
-          placeholder="jane@formik.com"
-        />
-
-        <MyDateInput
-          label="Date"
-          name="date"
-          id="date"
-          dateFormat="yyyy/MM/dd"
-        />
-
-        <MyTextInput
-          label="Time of Birth"
-          name="time"
-          type="time"
-          placeholder="jane@formik.com"
-        />
-
-        <button type="submit">Submit</button>
+        <div className="container text-center">
+          <div class="row">
+            <div class="col">
+              <MyTextInput
+                name="firstName"
+                type="text"
+                placeholder="First Name"
+              />{" "}
+            </div>
+            <div class="col">
+              <MyTextInput
+                name="lastName"
+                type="text"
+                placeholder="Last Name"
+              />{" "}
+            </div>
+          </div>
+          {/* <div className="row"> */}
+          <MyTextInput name="email" type="email" placeholder="Email" />
+          {/* </div> */}
+          <div>
+            <p style={{ marginBottom: "2px", marginTop: "1rem" }}>Birth Date</p>
+            <MyDateInput name="date" id="date" dateFormat="yyyy/MM/dd" />
+          </div>
+          <div>
+            <p style={{ marginBottom: "2px", marginTop: "1rem" }}>
+              Time o Birth
+            </p>
+            <MyTextInput
+              name="time"
+              type="time"
+              placeholder="jane@formik.com"
+            />
+          </div>
+          <div className="">
+            <button type="submit">Submit</button>
+          </div>
+        </div>
       </Form>
     </Formik>
   );

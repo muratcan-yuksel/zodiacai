@@ -13,6 +13,7 @@ import taurus from "../assets/taurussign.jpg";
 import virgo from "../assets/virgosign.jpg";
 import cancer from "../assets/cancersign.jpg";
 import { motion } from "framer-motion";
+import styles from "../styles/Home.module.css";
 
 const ZodiacSign = ({ image }) => {
   const [readMore, setReadMore] = useState(false);
@@ -40,18 +41,14 @@ const ZodiacSign = ({ image }) => {
       <h2>{image.charAt(0).toUpperCase() + image.slice(1)} </h2>
       <motion.div whileHover={{ scale: 1.2 }} transition={{ duration: 0.5 }}>
         <Image
-          style={{
-            border: "1px solid gray",
-            padding: "10px",
-            boxShadow: "0 0 10px gray",
-          }}
+          className={styles.image}
           src={src}
           alt="leo"
-          width={250}
-          height={250}
+          width={150}
+          height={150}
         />
       </motion.div>
-      <p style={{ width: "250px", marginTop: "1rem" }}>
+      <p className={styles.para}>
         {readMore ? text : `${text.substring(0, 80)}...`}
         <button className="btn" onClick={() => setReadMore(!readMore)}>
           {readMore ? "show less" : "  read more"}
