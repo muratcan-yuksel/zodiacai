@@ -10,6 +10,8 @@ const userSchema = new mongoose.Schema({
   subscriptionStatus: String,
   paid: Boolean,
   birthDate: Date,
+  timeOfBirth: String,
+  sign: String,
 });
 
 export default mongoose.models.User || mongoose.model("User", userSchema);

@@ -6,6 +6,7 @@ const stripe = require("stripe")(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 const webhookSecret = process.env.NEXT_PUBLIC_WEBHOOK_SECRET_KEY;
 import axios from "axios";
 import { parse } from "dotenv";
+import getZodiacSign from "../../utils/getSign";
 
 let formValues = {
   firstName: "",
@@ -36,6 +37,8 @@ const returnedData = {
     delinquent: "",
     //customer birth date
     birthDate: "",
+    timeOfBirth: "",
+    sign: "",
   },
   invoice: {
     fired: false,
@@ -200,6 +203,10 @@ const webhookHandler = async (req, res) => {
         returnedData.customer.delinquent = customer.delinquent;
         //birthDate
         returnedData.customer.birthDate = customer.metadata.birthDate;
+        //time of birth
+        returnedData.customer.timeOfBirth = customer.metadata.timeOfBirth;
+        //sign
+        returnedData.customer.sign = customer.metadata.sign;
 
         console.log(customer);
         console.log(parseDate(customer.created));
@@ -269,7 +276,12 @@ const webhookHandler = async (req, res) => {
         name: returnedData.customer.name,
         createdAt: returnedData.customer.createdAt,
         delinquent: returnedData.customer.delinquent,
-        birthDate: returnedData.customer.birthDate,
+        birthDate: returnedData.customer.birthDate.slice(0, 10),
+        timeOfBirth: returnedData.customer.timeOfBirth,
+        sign: getZodiacSign(
+          returnedData.customer.birthDate.slice(0, 10).toString(),
+          returnedData.customer.timeOfBirth.toString()
+        ),
       });
       // console.log(res);
       console.log("addd meeeeee");
@@ -278,6 +290,11 @@ const webhookHandler = async (req, res) => {
       console.log(err);
     }
   }
+
+  //if subcription created
+  // if (returnedData.subscription.fired) {
+  //   console.log("SUUUUUUBBSSSSC");
+  // }
 
   if (returnedData.invoice.fired) {
     //update user with subscription id, subscription status, paid
@@ -294,7 +311,7 @@ const webhookHandler = async (req, res) => {
     }
   }
 
-  console.log("log me " + returnedData.customer.name);
+  // console.log("log me " + returnedData.customer.name);
 };
 
 export default cors(webhookHandler);

@@ -5,6 +5,7 @@ import ZodiacSign from "../components/ZodiacSign";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import ActionCall from "../components/ActionCall";
+import PriceCard from "../components/PriceCard";
 import Form from "../components/Form";
 
 export default function Home() {
@@ -75,6 +76,7 @@ export default function Home() {
           </div>
         </div>
         <ActionCall />
+        <PriceCard />
         <Form />
       </main>
       {/* <footer className={styles.footer}>
