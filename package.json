@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "dependencies": {
     "@next/font": "^13.1.1",
@@ -32,6 +34,8 @@
     "react-datepicker": "^4.8.0",
     "react-dom": "18.2.0",
     "stripe": "^11.5.0",
-    "yup": "^0.32.11"
-  }
+    "yup": "^0.32.11",
+    "@snyk/protect": "latest"
+  },
+  "snyk": true
 }
