@@ -5,6 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import DatePicker from "react-datepicker";
 /* eslint-disable react/no-unescaped-entities */
+import styles from "../styles/Home.module.css";
 
 const MyForm = () => {
   const MyTextInput = ({ label, ...props }) => {
@@ -143,17 +144,26 @@ const MyForm = () => {
       <button onClick={handleCustomerPortal}>Customer Portal</button>
       <button onClick={handleGetUsers}>Get Users</button> */}
         {/* <h1>Subscribe!</h1> */}
-        <div className="container text-center">
-          <div class="row">
-            <div class="col">
+        <div
+          style={{
+            marginBottom: "10rem",
+            padding: "1rem",
+            boxShadow: "0 0 20px gray",
+          }}
+          className="container text-center border"
+        >
+          <div className="row">
+            <div className="col">
               <MyTextInput
+                className={styles.borderRadius}
                 name="firstName"
                 type="text"
                 placeholder="First Name"
               />{" "}
             </div>
-            <div class="col">
+            <div className="col">
               <MyTextInput
+                className={styles.borderRadius}
                 name="lastName"
                 type="text"
                 placeholder="Last Name"
@@ -161,24 +171,37 @@ const MyForm = () => {
             </div>
           </div>
           {/* <div className="row"> */}
-          <MyTextInput name="email" type="email" placeholder="Email" />
+          <MyTextInput
+            className={styles.borderRadius}
+            name="email"
+            type="email"
+            placeholder="Email"
+          />
           {/* </div> */}
           <div>
             <p style={{ marginBottom: "2px", marginTop: "1rem" }}>Birth Date</p>
-            <MyDateInput name="date" id="date" dateFormat="yyyy/MM/dd" />
+            <MyDateInput
+              className={styles.borderRadius}
+              name="date"
+              id="date"
+              dateFormat="yyyy/MM/dd"
+            />
           </div>
           <div>
             <p style={{ marginBottom: "2px", marginTop: "1rem" }}>
               Time o Birth
             </p>
             <MyTextInput
+              className={styles.borderRadius}
               name="time"
               type="time"
               placeholder="jane@formik.com"
             />
           </div>
           <div className="">
-            <button type="submit">Submit</button>
+            <button className={styles.myBtn} type="submit">
+              Subscribe Now!
+            </button>
           </div>
         </div>
       </Form>

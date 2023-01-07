@@ -17,3 +17,24 @@
     width: 250px;
   }
 }
+
+.borderRadius {
+  border-radius: 5%;
+}
+
+.myBtn {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 2rem;
+  margin: 4px 2px;
+  cursor: pointer;
+  margin: 1rem;
+  border-radius: 2%;
+  width: auto;
+  height: auto;
+}
