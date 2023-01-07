@@ -39,6 +39,7 @@ const returnedData = {
     birthDate: "",
     timeOfBirth: "",
     sign: "",
+    birthLocation: "",
   },
   invoice: {
     fired: false,
@@ -207,6 +208,8 @@ const webhookHandler = async (req, res) => {
         returnedData.customer.timeOfBirth = customer.metadata.timeOfBirth;
         //sign
         returnedData.customer.sign = customer.metadata.sign;
+        //birthLocation
+        returnedData.customer.birthLocation = customer.metadata.birthLocation;
 
         console.log(customer);
         console.log(parseDate(customer.created));
@@ -278,6 +281,7 @@ const webhookHandler = async (req, res) => {
         delinquent: returnedData.customer.delinquent,
         birthDate: returnedData.customer.birthDate.slice(0, 10),
         timeOfBirth: returnedData.customer.timeOfBirth,
+        birthLocation: returnedData.customer.birthLocation,
         sign: getZodiacSign(
           returnedData.customer.birthDate.slice(0, 10).toString(),
           returnedData.customer.timeOfBirth.toString()

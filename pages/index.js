@@ -76,7 +76,6 @@ export default function Home() {
           </div>
         </div>
         <ActionCall />
-        <PriceCard />
         <Form />
       </main>
       {/* <footer className={styles.footer}>

@@ -14,6 +14,7 @@ export default async function createUser(req, res) {
     birthDate,
     timeOfBirth,
     sign,
+    birthLocation,
   } = req.body;
   //these will be taken from the webhooks
   try {

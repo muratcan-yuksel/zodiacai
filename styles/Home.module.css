@@ -38,3 +38,16 @@
   width: auto;
   height: auto;
 }
+
+.priceCard {
+  border: 1px solid gray;
+  padding: 10px;
+  box-shadow: 0 0 10px gray;
+  height: 300px;
+  width: 250px;
+}
+.priceCardContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
