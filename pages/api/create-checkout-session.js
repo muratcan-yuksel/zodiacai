@@ -3,10 +3,13 @@ const stripe = require("stripe")(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 
 export default async function createCheckoutSession(req, res) {
   //these will be taken by form
-  const { name, email } = req.body;
+  const { name, email, date } = req.body;
   const customer = await stripe.customers.create({
     email,
     name,
+    metadata: {
+      birthDate: date,
+    },
   });
   console.log(customer);
 
@@ -15,6 +18,7 @@ export default async function createCheckoutSession(req, res) {
     customer: customer.id, // Associate the subscription with the customer
     payment_method_types: ["card"],
     line_items: [{ price: process.env.NEXT_PUBLIC_PRICE, quantity: 1 }],
+
     success_url: `http://localhost:3000/mypage?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `http://localhost:3000/mypage?session_id={CHECKOUT_SESSION_ID}`,
   });

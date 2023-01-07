@@ -132,6 +132,7 @@ const MyForm = () => {
                   {
                     name: `${values.firstName} ${values.lastName}`,
                     email: values.email,
+                    date: values.date,
                   }
                 );
                 console.log("hyyyyy" + response.data);

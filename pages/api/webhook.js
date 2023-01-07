@@ -34,6 +34,8 @@ const returnedData = {
     createdAt: "",
     //boolean
     delinquent: "",
+    //customer birth date
+    birthDate: "",
   },
   invoice: {
     fired: false,
@@ -196,6 +198,8 @@ const webhookHandler = async (req, res) => {
         returnedData.customer.name = customer.name;
         //delinquent
         returnedData.customer.delinquent = customer.delinquent;
+        //birthDate
+        returnedData.customer.birthDate = customer.metadata.birthDate;
 
         console.log(customer);
         console.log(parseDate(customer.created));
@@ -265,6 +269,7 @@ const webhookHandler = async (req, res) => {
         name: returnedData.customer.name,
         createdAt: returnedData.customer.createdAt,
         delinquent: returnedData.customer.delinquent,
+        birthDate: returnedData.customer.birthDate,
       });
       // console.log(res);
       console.log("addd meeeeee");

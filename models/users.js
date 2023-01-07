@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   subscriptionId: String,
   subscriptionStatus: String,
   paid: Boolean,
+  birthDate: Date,
 });
 
 export default mongoose.models.User || mongoose.model("User", userSchema);
