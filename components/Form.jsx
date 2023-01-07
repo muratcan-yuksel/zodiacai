@@ -36,7 +36,7 @@ const MyForm = () => {
 
   const MyDateInput = ({ label, ...props }) => {
     const { setFieldValue } = useFormikContext();
-    const [field] = useField(props);
+    const [field, meta] = useField(props);
     const [startDate, setStartDate] = useState(new Date("1990-01-01"));
     const onChange = (date) => {
       setStartDate(date);
@@ -54,6 +54,9 @@ const MyForm = () => {
             setFieldValue(field.name, val);
           }}
         />
+        {meta.touched && meta.error ? (
+          <div className="error">{meta.error}</div>
+        ) : null}
       </>
     );
   };
@@ -123,6 +126,10 @@ const MyForm = () => {
 
               .email("Invalid email address")
 
+              .required("Required"),
+
+            date: Yup.date()
+              .typeError("please enter a valid date")
               .required("Required"),
           })}
           onSubmit={(values) => {
