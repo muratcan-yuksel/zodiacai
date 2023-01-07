@@ -3,12 +3,12 @@ const stripe = require("stripe")(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 
 export default async function createCheckoutSession(req, res) {
   //these will be taken by form
-  // const { name, email } = req.body;
+  const { name, email } = req.body;
   const customer = await stripe.customers.create({
-    email: "sadasdsadsadsadsadsa@example.com",
-    name: "mine Smith",
+    email,
+    name,
   });
-  // console.log(customer);
+  console.log(customer);
 
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",

@@ -63,16 +63,6 @@ const MyForm = () => {
 
   const router = useRouter();
 
-  const handleBuy = async () => {
-    try {
-      const response = await axios.post("/api/create-checkout-session");
-      console.log("hyyyyy" + response.data);
-      router.push(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   async function handleCustomerPortal() {
     try {
       const response = await axios.post("/api/customer-portal");
@@ -133,7 +123,24 @@ const MyForm = () => {
               .required("Required"),
           })}
           onSubmit={(values) => {
-            alert(JSON.stringify(values, null, 2));
+            // alert(JSON.stringify(values, null, 2));
+            console.log(values.firstName);
+            const sendDataToCheckout = async () => {
+              try {
+                const response = await axios.post(
+                  "/api/create-checkout-session",
+                  {
+                    name: `${values.firstName} ${values.lastName}`,
+                    email: values.email,
+                  }
+                );
+                console.log("hyyyyy" + response.data);
+                router.push(response.data);
+              } catch (error) {
+                console.error(error);
+              }
+            };
+            sendDataToCheckout();
           }}
         >
           <Form>

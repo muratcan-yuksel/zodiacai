@@ -7,6 +7,13 @@ const webhookSecret = process.env.NEXT_PUBLIC_WEBHOOK_SECRET_KEY;
 import axios from "axios";
 import { parse } from "dotenv";
 
+let formValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  date: "",
+};
+
 const returnedData = {
   checkoutSession: {
     fired: false,
