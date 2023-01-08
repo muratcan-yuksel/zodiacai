@@ -159,7 +159,7 @@ const webhookHandler = async (req, res) => {
             name: checkoutSession.customer_details.name,
             email: checkoutSession.customer_details.email,
             subject: "Welcome to ZodiacAI",
-            message: "your bits are ready",
+            message: `<h1>Welcome to ZodiacAI ${checkoutSession.customer_details.name}</h1><p>Thank you for subscribing to ZodiacAI! We are happy to have you on board. You can now access your horoscope and your personal astrologer. You will get an email each and every day .</p>`,
           });
         } catch (err) {
           console.log(err);
