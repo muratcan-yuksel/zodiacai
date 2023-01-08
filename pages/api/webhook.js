@@ -9,7 +9,7 @@ import { parse } from "dotenv";
 import getZodiacSign from "../../utils/getSign";
 const Mutex = require("async-mutex").Mutex;
 const dataMutex = new Mutex();
-
+import WelcomeMail from "../../utils/WelcomeMail";
 // this component uses stripe webhooks
 // they are fired when a change happens in stripe, like a subscription or checkout completion
 // I am using the webhooks to send an email to the user when the checkout is completed
@@ -159,7 +159,7 @@ const webhookHandler = async (req, res) => {
             name: checkoutSession.customer_details.name,
             email: checkoutSession.customer_details.email,
             subject: "Welcome to ZodiacAI",
-            message: `<h1>Welcome to ZodiacAI ${checkoutSession.customer_details.name}</h1><p>Thank you for subscribing to ZodiacAI! We are happy to have you on board. You can now access your horoscope and your personal astrologer. You will get an email each and every day .</p>`,
+            message: WelcomeMail.body,
           });
         } catch (err) {
           console.log(err);
