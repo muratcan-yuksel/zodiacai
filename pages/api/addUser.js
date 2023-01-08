@@ -27,6 +27,7 @@ export default async function createUser(req, res) {
       birthDate,
       timeOfBirth,
       sign,
+      birthLocation,
     });
     res.status(200).json(user);
   } catch (error) {

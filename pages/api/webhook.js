@@ -8,15 +8,15 @@ import axios from "axios";
 import { parse } from "dotenv";
 import getZodiacSign from "../../utils/getSign";
 const Mutex = require("async-mutex").Mutex;
-
 const dataMutex = new Mutex();
 
-let formValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  date: "",
-};
+// this component uses stripe webhooks
+// they are fired when a change happens in stripe, like a subscription or checkout completion
+// I am using the webhooks to send an email to the user when the checkout is completed
+// The problem is, as far as I see it, all the webhooks are fired at the same time
+// and I need to get the data from customer.created webhook to checkout.session.completed webhook
+// In order to achieve this, I'm using mutexes to lock the code until the data is received
+// and then I'm using the data in the next webhook
 
 const returnedData = {
   checkoutSession: {
@@ -155,8 +155,6 @@ const webhookHandler = async (req, res) => {
 
         const releaseTwo = await dataMutex.acquire();
         try {
-          // Use the `data` variable
-
           await axios.post("http://localhost:3000/api/sendMail", {
             name: checkoutSession.customer_details.name,
             email: checkoutSession.customer_details.email,
@@ -166,7 +164,6 @@ const webhookHandler = async (req, res) => {
         } catch (err) {
           console.log(err);
         } finally {
-          // console.log(data);
           releaseTwo();
         }
 

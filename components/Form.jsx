@@ -94,7 +94,7 @@ const MyForm = () => {
           email: "",
           date: "",
           time: "",
-          location: "",
+          birthLocation: "",
         }}
         validationSchema={Yup.object({
           firstName: Yup.string()
@@ -120,7 +120,7 @@ const MyForm = () => {
             .required("Required"),
 
           time: Yup.string().required("Required"),
-          location: Yup.string()
+          birthLocation: Yup.string()
 
             .max(150, "Must be 150 characters or less")
 
@@ -138,6 +138,7 @@ const MyForm = () => {
                   email: values.email,
                   date: values.date,
                   time: values.time,
+                  birthLocation: values.birthLocation,
                 }
               );
               console.log("hyyyyy" + response.data);
@@ -194,7 +195,7 @@ const MyForm = () => {
             <div>
               <MyTextInput
                 className={styles.borderRadius}
-                name="location"
+                name="birthLocation"
                 type="text"
                 placeholder="Birth Location"
                 style={{ marginTop: "1rem" }}

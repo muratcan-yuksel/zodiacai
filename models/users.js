@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
   birthDate: Date,
   timeOfBirth: String,
   sign: String,
+  birthLocation: String,
 });
 
 export default mongoose.models.User || mongoose.model("User", userSchema);
