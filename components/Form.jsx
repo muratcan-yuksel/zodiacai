@@ -7,8 +7,20 @@ import DatePicker from "react-datepicker";
 /* eslint-disable react/no-unescaped-entities */
 import styles from "../styles/Home.module.css";
 import PriceCard from "./PriceCard";
+import PaypalCheckout from "./PaypalCheckout";
 
 const MyForm = () => {
+  const [customerInfo, setCustomerInfo] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    birthDate: "",
+    birthTime: "",
+    birthLocation: "",
+  });
+  const [isFormVisible, setIsFormVisible] = useState(true);
+  const [isPaypalVisible, setIsPaypalVisible] = useState(false);
+
   const MyTextInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     const [value, setValue] = useState(field.value);
@@ -129,25 +141,35 @@ const MyForm = () => {
         onSubmit={(values) => {
           alert(JSON.stringify(values, null, 2));
           console.log(values.firstName);
-          const sendDataToCheckout = async () => {
-            try {
-              const response = await axios.post(
-                "/api/create-checkout-session",
-                {
-                  name: `${values.firstName} ${values.lastName}`,
-                  email: values.email,
-                  date: values.date,
-                  time: values.time,
-                  birthLocation: values.birthLocation,
-                }
-              );
-              console.log("hyyyyy" + response.data);
-              router.push(response.data);
-            } catch (error) {
-              console.error(error);
-            }
-          };
-          sendDataToCheckout();
+          setCustomerInfo({
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+            birthDate: values.date,
+            birthTime: values.time,
+            birthLocation: values.birthLocation,
+          });
+          setIsFormVisible(false);
+          setIsPaypalVisible(true);
+          // const sendDataToCheckout = async () => {
+          //   try {
+          //     const response = await axios.post(
+          //       "/api/create-checkout-session",
+          //       {
+          //         name: `${values.firstName} ${values.lastName}`,
+          //         email: values.email,
+          //         date: values.date,
+          //         time: values.time,
+          //         birthLocation: values.birthLocation,
+          //       }
+          //     );
+          //     console.log("hyyyyy" + response.data);
+          //     router.push(response.data);
+          //   } catch (error) {
+          //     console.error(error);
+          //   }
+          // };
+          // sendDataToCheckout();
         }}
       >
         <Form>
@@ -165,70 +187,75 @@ const MyForm = () => {
             className="container text-center border"
           >
             <PriceCard />
-
-            <div className="row">
-              <div className="col">
+            {/* hide this div on submit */}
+            {isFormVisible && (
+              <div>
+                <div className="row">
+                  <div className="col">
+                    <MyTextInput
+                      className={styles.borderRadius}
+                      name="firstName"
+                      type="text"
+                      placeholder="First Name"
+                    />{" "}
+                  </div>
+                  <div className="col">
+                    <MyTextInput
+                      className={styles.borderRadius}
+                      name="lastName"
+                      type="text"
+                      placeholder="Last Name"
+                    />{" "}
+                  </div>
+                </div>
+                {/* <div className="row"> */}
                 <MyTextInput
                   className={styles.borderRadius}
-                  name="firstName"
-                  type="text"
-                  placeholder="First Name"
-                />{" "}
-              </div>
-              <div className="col">
-                <MyTextInput
-                  className={styles.borderRadius}
-                  name="lastName"
-                  type="text"
-                  placeholder="Last Name"
-                />{" "}
-              </div>
-            </div>
-            {/* <div className="row"> */}
-            <MyTextInput
-              className={styles.borderRadius}
-              name="email"
-              type="email"
-              placeholder="Email"
-            />
-            {/* </div> */}
-            <div>
-              <MyTextInput
-                className={styles.borderRadius}
-                name="birthLocation"
-                type="text"
-                placeholder="Birth Location"
-                style={{ marginTop: "1rem" }}
-              />{" "}
-            </div>
-            <div>
-              <p style={{ marginBottom: "2px", marginTop: "1rem" }}>
-                Birth Date
-              </p>
-              <MyDateInput
-                className={styles.borderRadius}
-                name="date"
-                id="date"
-                dateFormat="yyyy/MM/dd"
-              />
-            </div>
-            <div>
-              <p style={{ marginBottom: "2px", marginTop: "1rem" }}>
-                Time of Birth
-              </p>
-              <MyTextInput
-                className={styles.borderRadius}
-                name="time"
-                type="time"
-                placeholder="jane@formik.com"
-              />
-            </div>
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                />
+                {/* </div> */}
+                <div>
+                  <MyTextInput
+                    className={styles.borderRadius}
+                    name="birthLocation"
+                    type="text"
+                    placeholder="Birth Location"
+                    style={{ marginTop: "1rem" }}
+                  />{" "}
+                </div>
+                <div>
+                  <p style={{ marginBottom: "2px", marginTop: "1rem" }}>
+                    Birth Date
+                  </p>
+                  <MyDateInput
+                    className={styles.borderRadius}
+                    name="date"
+                    id="date"
+                    dateFormat="yyyy/MM/dd"
+                  />
+                </div>
+                <div>
+                  <p style={{ marginBottom: "2px", marginTop: "1rem" }}>
+                    Time of Birth
+                  </p>
+                  <MyTextInput
+                    className={styles.borderRadius}
+                    name="time"
+                    type="time"
+                    placeholder="jane@formik.com"
+                  />
+                </div>
 
-            <div className="">
-              <button className={styles.myBtn} type="submit">
-                Subscribe Now!
-              </button>
-            </div>
+                <div className="">
+                  <button className={styles.myBtn} type="submit">
+                    Subscribe Now!
+                  </button>
+                </div>
+              </div>
+            )}
+            {isPaypalVisible && <PaypalCheckout props={customerInfo} />}
           </div>
         </Form>
       </Formik>
