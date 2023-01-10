@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
@@ -28,30 +29,40 @@ export default function Home({}) {
 
   const horoscopes = [];
 
-  for (let i = 0; i < signs.length; i++) {
-    makeRequest(signs[i]);
+  let completedRequests = 0;
+  const [zodiacSigns, setZodiacSigns] = useState();
+
+  for (const sign of signs) {
+    makeRequest(sign);
+    if (completedRequests == 12) {
+      break;
+    }
   }
 
   function getSignsRequest(body) {
     return axios.post("http://localhost:3000/api/getSigns", body);
   }
 
-  async function makeRequest(req, res) {
+  async function makeRequest(sign) {
     try {
-      const body = req.body;
+      const body = { sign };
       const res = await backOff(() => getSignsRequest(body));
-      console.log(res.data);
       horoscopes.push(res.data);
     } catch (error) {
       console.error(error);
     }
-
-    let objectArray = signs.map((elem, index) => {
-      return {
-        [elem]: horoscopes[index],
-      };
-    });
-    console.log(objectArray); // Output: [{ key1: "value1"},{ key2: "value2"}]
+    completedRequests++;
+    if (completedRequests === signs.length) {
+      let objectArray = signs.map((elem, index) => {
+        return {
+          [elem]: horoscopes[index],
+        };
+      });
+      setZodiacSigns({
+        objectArray,
+      });
+      console.log(objectArray);
+    }
   }
 
   // makeRequest();
