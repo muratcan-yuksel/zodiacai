@@ -1,13 +1,14 @@
 import React from "react";
+import styles from "../styles/Home.module.css";
 /* eslint-disable react/no-unescaped-entities */
 const Header = () => {
   return (
     <header className="d-flex flex-column align-items-center justify-content-center p-5 ">
-      <h1 style={{ width: "80%" }} className="text-center">
+      <h1 className={styles.headerTitle}>
         {" "}
         Zodiac AI - The world's first AI-powered horoscope teller on the web
       </h1>
-      <p style={{ width: "60%" }} className="text-center">
+      <p className={styles.headerPara}>
         "Welcome to Zodiac AI, the world's first AI-powered horoscope teller on
         the web. With the latest technology and ancient wisdom combined, our AI
         uses OpenAI to provide the most accurate daily horoscopes. Trust in the

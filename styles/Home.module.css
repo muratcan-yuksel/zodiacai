@@ -7,6 +7,22 @@
   width: 150px;
   margin-top: 1rem;
 }
+.headerTitle {
+  width: 80%;
+  text-align: center;
+}
+.headerPara {
+  width: 60%;
+  text-align: center;
+}
+@media (max-width: 767px) {
+  .headerTitle {
+    width: 100%;
+  }
+  .headerPara {
+    width: 100%;
+  }
+}
 
 @media (min-width: 1024px) {
   .image {
