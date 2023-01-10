@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 const initialOptions = {
-  "client-id":
-    "AXlw0TFGg-hzgayVBMyDbAUNZcHlwBgCxdfZxzymeYQ4JrZVFQc-t1mFcw2nyJR9AjgRKSWRxD3UftsD",
+  "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
   currency: "USD",
   intent: "subscription",
   // "enable-funding": "venmo",
@@ -21,38 +20,34 @@ function PaypalCheckout({ props }) {
 
   const createSubscription = (data, actions) => {
     return actions.subscription.create({
-      plan_id: "P-1XE55367HE6198404MO56ZKQ",
+      plan_id: process.env.NEXT_PUBLIC_PAYPAL_PLAN_ID,
     });
   };
   let apiHelper;
   const onApprove = (data, actions) => {
+    //send email here also
     console.log("paypal approved");
 
     console.log(data);
     console.log(props);
 
-    // apiHelper(
-    //   {
-    //     orderID: data.orderID,
+    // const sendUserData = async () => {
+    // orderID: data.orderID,
     //     subscriptionID: data.subscriptionID,
     //     paymentSource: data.paymentSource,
     //     facilitatorAccessToken: data.facilitatorAccessToken,
-    //   },
-    //   "/api/accounts/subscribe",
-    //   "POST"
-    //   // token
-    // )
-    //   .then((res) => res.json())
-    //   .then((res) => {
-    //     console.log(res);
-    //     if (res.status === 200) {
-    //       console.log("success");
-    //       // show success message to user or navigate to a different page
-    //     } else {
-    //       console.log("failure");
-    //       // show error message to user
-    //     }
-    //   });
+    //   try {
+    //     await axios.post("http://localhost:3000/api/addUser", {
+    //       name: props.name,
+    //       email: props.email,
+    //       subject: "Welcome to ZodiacAI",
+    //       message: WelcomeMail.body,
+    //     });
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
+    // sendUserData();
   };
 
   return (

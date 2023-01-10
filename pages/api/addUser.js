@@ -15,6 +15,11 @@ export default async function createUser(req, res) {
     timeOfBirth,
     sign,
     birthLocation,
+    //paypal ones
+    orderID,
+    subscriptionID,
+    paymentSource,
+    facilitatorAccessToken,
   } = req.body;
   //these will be taken from the webhooks
   try {
@@ -28,6 +33,11 @@ export default async function createUser(req, res) {
       timeOfBirth,
       sign,
       birthLocation,
+      //paypal ones
+      orderID,
+      subscriptionID,
+      paymentSource,
+      facilitatorAccessToken,
     });
     res.status(200).json(user);
   } catch (error) {

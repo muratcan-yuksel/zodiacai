@@ -13,6 +13,11 @@ const userSchema = new mongoose.Schema({
   timeOfBirth: String,
   sign: String,
   birthLocation: String,
+  //paypal ones
+  orderID: String,
+  subscriptionID: String,
+  paymentSource: String,
+  facilitatorAccessToken: String,
 });
 
 export default mongoose.models.User || mongoose.model("User", userSchema);

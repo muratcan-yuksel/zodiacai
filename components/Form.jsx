@@ -255,7 +255,11 @@ const MyForm = () => {
                 </div>
               </div>
             )}
-            {isPaypalVisible && <PaypalCheckout props={customerInfo} />}
+            {isPaypalVisible && (
+              <div style={{ marginTop: "1rem" }}>
+                <PaypalCheckout props={customerInfo} />
+              </div>
+            )}
           </div>
         </Form>
       </Formik>
