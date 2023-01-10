@@ -7,8 +7,55 @@ import Navbar from "../components/Navbar";
 import ActionCall from "../components/ActionCall";
 import PriceCard from "../components/PriceCard";
 import Form from "../components/Form";
+import axios from "axios";
+import { backOff } from "exponential-backoff";
 
-export default function Home() {
+export default function Home({}) {
+  const signs = [
+    "Aries",
+    "Taurus",
+    "Gemini",
+    "Cancer",
+    "Leo",
+    "Virgo",
+    "Libra",
+    "Scorpio",
+    "Sagittarius",
+    "Capricorn",
+    "Aquarius",
+    "Pisces",
+  ];
+
+  const horoscopes = [];
+
+  for (let i = 0; i < signs.length; i++) {
+    makeRequest(signs[i]);
+  }
+
+  function getSignsRequest(body) {
+    return axios.post("http://localhost:3000/api/getSigns", body);
+  }
+
+  async function makeRequest(req, res) {
+    try {
+      const body = req.body;
+      const res = await backOff(() => getSignsRequest(body));
+      console.log(res.data);
+      horoscopes.push(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+
+    let objectArray = signs.map((elem, index) => {
+      return {
+        [elem]: horoscopes[index],
+      };
+    });
+    console.log(objectArray); // Output: [{ key1: "value1"},{ key2: "value2"}]
+  }
+
+  // makeRequest();
+
   return (
     <div className={styles.container}>
       <Head>
