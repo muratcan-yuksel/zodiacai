@@ -193,7 +193,7 @@ const MyForm = () => {
                 <div className="row">
                   <div className="col">
                     <MyTextInput
-                      className={styles.borderRadius}
+                      className={styles.formItem}
                       name="firstName"
                       type="text"
                       placeholder="First Name"
@@ -201,7 +201,7 @@ const MyForm = () => {
                   </div>
                   <div className="col">
                     <MyTextInput
-                      className={styles.borderRadius}
+                      className={styles.formItem}
                       name="lastName"
                       type="text"
                       placeholder="Last Name"
@@ -210,7 +210,7 @@ const MyForm = () => {
                 </div>
                 {/* <div className="row"> */}
                 <MyTextInput
-                  className={styles.borderRadius}
+                  className={styles.formItem}
                   name="email"
                   type="email"
                   placeholder="Email"
@@ -218,7 +218,7 @@ const MyForm = () => {
                 {/* </div> */}
                 <div>
                   <MyTextInput
-                    className={styles.borderRadius}
+                    className={styles.formItem}
                     name="birthLocation"
                     type="text"
                     placeholder="Birth Location"
@@ -230,7 +230,7 @@ const MyForm = () => {
                     Birth Date
                   </p>
                   <MyDateInput
-                    className={styles.borderRadius}
+                    className={styles.formItem}
                     name="date"
                     id="date"
                     dateFormat="yyyy/MM/dd"
@@ -241,7 +241,7 @@ const MyForm = () => {
                     Time of Birth
                   </p>
                   <MyTextInput
-                    className={styles.borderRadius}
+                    className={styles.formItem}
                     name="time"
                     type="time"
                     placeholder="jane@formik.com"

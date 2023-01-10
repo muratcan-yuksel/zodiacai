@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema({
   // paid: Boolean,
   birthDate: Date,
   timeOfBirth: String,
-  sign: String,
+  sign: String,        2023 Zodiac AI. All rights reserved.
+
   birthLocation: String,
   //paypal ones
   orderID: String,

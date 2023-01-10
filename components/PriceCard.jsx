@@ -4,7 +4,16 @@ import styles from "../styles/Home.module.css";
 const PriceCard = () => {
   return (
     <div className={styles.priceCardContainer}>
-      <div className={styles.priceCard}>lorem</div>
+      <div className={styles.priceCard}>
+        <div className={styles.priceCardTop}>Standard</div>
+        <h2 className={styles.priceCardTitle}> $10.00 / mo</h2>
+        <div className={styles.priceCardList}>
+          <div>Personalized daily horoscope at your email each day</div>
+          <div>Compatibility reports</div>
+          <div>Lucky numbers</div>
+          <div>Cancel anytime</div>
+        </div>
+      </div>
     </div>
   );
 };

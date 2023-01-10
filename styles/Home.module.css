@@ -18,8 +18,13 @@
   }
 }
 
-.borderRadius {
+.formItem {
   border-radius: 5%;
+}
+@media (max-width: 767px) {
+  .formItem {
+    margin-bottom: 1rem;
+  }
 }
 
 .myBtn {
@@ -39,15 +44,39 @@
   height: auto;
 }
 
+.priceCardContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
 .priceCard {
   border: 1px solid gray;
-  padding: 10px;
+  padding: 0;
   box-shadow: 0 0 10px gray;
   height: 300px;
   width: 250px;
 }
-.priceCardContainer {
+.priceCardTop {
+  background-color: rgb(228, 227, 227);
+  padding: 8px 0;
+  border-radius: 5%;
+}
+.priceCardTitle {
+  margin-top: 1rem;
+}
+.priceCardList {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+}
+
+.footer {
+  height: 5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
