@@ -3,7 +3,7 @@ export default async function getSigns(req, res) {
   try {
     const { sign } = req.body;
     const apiUrl = "https://api.openai.com/v1/completions";
-    const prompt = `write a daily horoscope for ${sign} zodiac sign. Make it at least 50 words long. `;
+    const prompt = `write a daily horoscope for ${sign} zodiac sign. Make it at least 150 words long. `;
     const apiKey = process.env.NEXT_PUBLIC_OPENAI_KEY;
     const config = {
       headers: {
@@ -15,7 +15,7 @@ export default async function getSigns(req, res) {
       model: "text-davinci-003",
       prompt: prompt,
       temperature: 1,
-      max_tokens: 100,
+      max_tokens: 300,
       echo: false,
     };
     let jsonData;

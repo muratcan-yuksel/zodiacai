@@ -1,4 +1,3 @@
-import { MongoClient } from "mongodb";
 import clientPromise from "../../lib/mongodb";
 
 const uri = process.env.NEXT_PUBLIC_MONGODB_URI;

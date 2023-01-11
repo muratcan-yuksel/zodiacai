@@ -12,7 +12,18 @@ import axios from "axios";
 import { backOff } from "exponential-backoff";
 
 export default function Home({ generalSigns }) {
-  console.log(generalSigns);
+  // console.log(generalSigns);
+  if (!generalSigns) {
+    return (
+      <div className="container text-center">
+        <h2>
+          {" "}
+          Fetching data from the server, please come back in a few minutes.
+        </h2>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -25,8 +36,6 @@ export default function Home({ generalSigns }) {
       </Head>
 
       <main className={styles.main}>
-        <Navbar />
-        <Header />
         <div className="container">
           <div className="row">
             <div style={{ width: "auto" }} className="col">
@@ -85,13 +94,7 @@ export default function Home({ generalSigns }) {
             </div>
           </div>
         </div>
-        <ActionCall />
-        <Form />
       </main>
-      <footer className={styles.footer}>
-        <p> 2023 Zodiac AI. All rights reserved.</p>{" "}
-        <p>Contact: mail@zodiacai.net</p>
-      </footer>
     </div>
   );
 }
