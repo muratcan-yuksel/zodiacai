@@ -52,9 +52,9 @@ const ZodiacSign = ({ image, horoscope }) => {
       </motion.div>
       <p className={styles.para}>
         {readMore ? horoscope : `${horoscope.substring(0, 80)}...`}
-        <button className="btn" onClick={() => setReadMore(!readMore)}>
+        {/* <button className="btn" onClick={() => setReadMore(!readMore)}>
           {readMore ? "show less" : "  read more"}
-        </button>
+        </button> */}
       </p>
       <MyModal title={signTitle} horoscope={horoscope} />
     </div>

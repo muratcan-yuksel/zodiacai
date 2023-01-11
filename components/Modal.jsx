@@ -35,8 +35,13 @@ function MyModal({ title, horoscope }) {
   }
 
   return (
-    <div>
-      <button onClick={openModal}>Open Modal</button>
+    <div style={{ marginTop: "0" }}>
+      <button
+        style={{ background: "transparent", border: "none" }}
+        onClick={openModal}
+      >
+        Read More
+      </button>
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -47,7 +52,12 @@ function MyModal({ title, horoscope }) {
         <h2 ref={(_subtitle) => (subtitle = _subtitle)}>{title}</h2>
         <p> {horoscope} </p>
 
-        <button onClick={closeModal}>close</button>
+        <button
+          style={{ background: "transparent", borderRadius: "15%" }}
+          onClick={closeModal}
+        >
+          close
+        </button>
       </Modal>
     </div>
   );
