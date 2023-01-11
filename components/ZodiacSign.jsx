@@ -15,7 +15,7 @@ import cancer from "../assets/cancersign.jpg";
 import { motion } from "framer-motion";
 import styles from "../styles/Home.module.css";
 
-const ZodiacSign = ({ image }) => {
+const ZodiacSign = ({ image, horoscope }) => {
   const [readMore, setReadMore] = useState(false);
   const text =
     " Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius adipisci atque inventore totam dignissimos itaque animi ullam delectus fugiat consequuntur quod, libero veniam, blanditiis voluptate sint maiores assumenda laborum id. ";
@@ -49,7 +49,7 @@ const ZodiacSign = ({ image }) => {
         />
       </motion.div>
       <p className={styles.para}>
-        {readMore ? text : `${text.substring(0, 80)}...`}
+        {readMore ? horoscope : `${horoscope.substring(0, 80)}...`}
         <button className="btn" onClick={() => setReadMore(!readMore)}>
           {readMore ? "show less" : "  read more"}
         </button>

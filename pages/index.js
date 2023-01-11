@@ -11,92 +11,8 @@ import Form from "../components/Form";
 import axios from "axios";
 import { backOff } from "exponential-backoff";
 
-export default function Home({}) {
-  // const signs = [
-  //   "Aries",
-  //   "Taurus",
-  //   "Gemini",
-  //   "Cancer",
-  //   "Leo",
-  //   "Virgo",
-  //   "Libra",
-  //   "Scorpio",
-  //   "Sagittarius",
-  //   "Capricorn",
-  //   "Aquarius",
-  //   "Pisces",
-  // ];
-
-  // const callGetSigns = async (sign) => {
-  //   try {
-  //     const apiUrl = "http://localhost:3000/api/getSigns";
-  //     const response = await axios.post(apiUrl, {
-  //       sign: sign,
-  //     });
-  //     console.log(response.data.choices[0].text);
-
-  //     return response.data.choices[0].text;
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // const callAddGeneralSigns = async (signsObject) => {
-  //   try {
-  //     const apiUrl = "http://localhost:3000/api/addGeneralSigns";
-  //     const response = await axios.post(apiUrl, {
-  //       signsObject: signsObject,
-  //     });
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // const [signsData, setSignsData] = useState();
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState(false);
-
-  // const getSigns = async () => {
-  //   setLoading(true);
-  //   setError(false);
-  //   try {
-  //     const data = await Promise.all(
-  //       signs.map(async (sign) => {
-  //         const signData = await callGetSigns(sign);
-  //         console.log(signData);
-  //         return signData;
-  //       })
-  //     );
-  //     //creates an array of objects like arr[0].Taurus, not so good
-  //     let objectArray = signs.map((elem, index) => {
-  //       return {
-  //         [elem]: data[index],
-  //       };
-  //     });
-  //     //turns the array of objects into a single object
-  //     let resultObject = {};
-  //     for (let i = 0; i < objectArray.length; i++) {
-  //       Object.assign(resultObject, objectArray[i]);
-  //     }
-  //     console.log(resultObject);
-
-  //     callAddGeneralSigns(resultObject);
-
-  //     setSignsData(resultObject);
-
-  //     setLoading(false);
-  //   } catch (error) {
-  //     setError(true);
-  //     setLoading(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getSigns();
-  //   // console.log(signsData);
-  // }, []);
-
+export default function Home({ generalSigns }) {
+  console.log(generalSigns);
   return (
     <div className={styles.container}>
       <Head>
@@ -115,9 +31,10 @@ export default function Home({}) {
           <div className="row">
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="aries" />
+              <ZodiacSign image="aries" horoscope={generalSigns.Aries} />
             </div>
-            <div style={{ width: "auto" }} className="col">
+
+            {/* <div style={{ width: "auto" }} className="col">
               {" "}
               <ZodiacSign image="taurus" />
             </div>
@@ -160,7 +77,7 @@ export default function Home({}) {
             <div style={{ width: "auto" }} className="col">
               {" "}
               <ZodiacSign image="pisces" />
-            </div>
+            </div> */}
           </div>
         </div>
         <ActionCall />
@@ -172,4 +89,24 @@ export default function Home({}) {
       </footer>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  try {
+    const response = await axios.get(
+      "http://localhost:3000/api/getLastGeneralSignObject"
+    );
+    return {
+      props: {
+        generalSigns: response.data.signsObject,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      props: {
+        error: error.message,
+      },
+    };
+  }
 }
