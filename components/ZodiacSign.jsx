@@ -14,6 +14,7 @@ import virgo from "../assets/virgosign.jpg";
 import cancer from "../assets/cancersign.jpg";
 import { motion } from "framer-motion";
 import styles from "../styles/Home.module.css";
+import MyModal from "./Modal";
 
 const ZodiacSign = ({ image, horoscope }) => {
   const [readMore, setReadMore] = useState(false);
@@ -36,9 +37,10 @@ const ZodiacSign = ({ image, horoscope }) => {
     // add more images here
   };
   const src = images[image];
+  const signTitle = image.charAt(0).toUpperCase() + image.slice(1);
   return (
     <div className="d-flex flex-column justify-content-center align-items-center">
-      <h2>{image.charAt(0).toUpperCase() + image.slice(1)} </h2>
+      <h2>{signTitle}</h2>
       <motion.div whileHover={{ scale: 1.2 }} transition={{ duration: 0.5 }}>
         <Image
           className={styles.image}
@@ -54,6 +56,7 @@ const ZodiacSign = ({ image, horoscope }) => {
           {readMore ? "show less" : "  read more"}
         </button>
       </p>
+      <MyModal title={signTitle} horoscope={horoscope} />
     </div>
   );
 };
