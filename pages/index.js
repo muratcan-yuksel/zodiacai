@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
@@ -12,60 +12,90 @@ import axios from "axios";
 import { backOff } from "exponential-backoff";
 
 export default function Home({}) {
-  const signs = [
-    "Aries",
-    "Taurus",
-    "Gemini",
-    "Cancer",
-    "Leo",
-    "Virgo",
-    "Libra",
-    "Scorpio",
-    "Sagittarius",
-    "Capricorn",
-    "Aquarius",
-    "Pisces",
-  ];
+  // const signs = [
+  //   "Aries",
+  //   "Taurus",
+  //   "Gemini",
+  //   "Cancer",
+  //   "Leo",
+  //   "Virgo",
+  //   "Libra",
+  //   "Scorpio",
+  //   "Sagittarius",
+  //   "Capricorn",
+  //   "Aquarius",
+  //   "Pisces",
+  // ];
 
-  const horoscopes = [];
+  // const callGetSigns = async (sign) => {
+  //   try {
+  //     const apiUrl = "http://localhost:3000/api/getSigns";
+  //     const response = await axios.post(apiUrl, {
+  //       sign: sign,
+  //     });
+  //     console.log(response.data.choices[0].text);
 
-  let completedRequests = 0;
-  const [zodiacSigns, setZodiacSigns] = useState();
+  //     return response.data.choices[0].text;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  for (const sign of signs) {
-    makeRequest(sign);
-    if (completedRequests == 12) {
-      break;
-    }
-  }
+  // const callAddGeneralSigns = async (signsObject) => {
+  //   try {
+  //     const apiUrl = "http://localhost:3000/api/addGeneralSigns";
+  //     const response = await axios.post(apiUrl, {
+  //       signsObject: signsObject,
+  //     });
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  function getSignsRequest(body) {
-    return axios.post("http://localhost:3000/api/getSigns", body);
-  }
+  // const [signsData, setSignsData] = useState();
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(false);
 
-  async function makeRequest(sign) {
-    try {
-      const body = { sign };
-      const res = await backOff(() => getSignsRequest(body));
-      horoscopes.push(res.data);
-    } catch (error) {
-      console.error(error);
-    }
-    completedRequests++;
-    if (completedRequests === signs.length) {
-      let objectArray = signs.map((elem, index) => {
-        return {
-          [elem]: horoscopes[index],
-        };
-      });
-      setZodiacSigns({
-        objectArray,
-      });
-      console.log(objectArray);
-    }
-  }
+  // const getSigns = async () => {
+  //   setLoading(true);
+  //   setError(false);
+  //   try {
+  //     const data = await Promise.all(
+  //       signs.map(async (sign) => {
+  //         const signData = await callGetSigns(sign);
+  //         console.log(signData);
+  //         return signData;
+  //       })
+  //     );
+  //     //creates an array of objects like arr[0].Taurus, not so good
+  //     let objectArray = signs.map((elem, index) => {
+  //       return {
+  //         [elem]: data[index],
+  //       };
+  //     });
+  //     //turns the array of objects into a single object
+  //     let resultObject = {};
+  //     for (let i = 0; i < objectArray.length; i++) {
+  //       Object.assign(resultObject, objectArray[i]);
+  //     }
+  //     console.log(resultObject);
 
-  // makeRequest();
+  //     callAddGeneralSigns(resultObject);
+
+  //     setSignsData(resultObject);
+
+  //     setLoading(false);
+  //   } catch (error) {
+  //     setError(true);
+  //     setLoading(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getSigns();
+  //   // console.log(signsData);
+  // }, []);
 
   return (
     <div className={styles.container}>
