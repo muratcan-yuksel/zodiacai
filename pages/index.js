@@ -33,51 +33,56 @@ export default function Home({ generalSigns }) {
               {" "}
               <ZodiacSign image="aries" horoscope={generalSigns.Aries} />
             </div>
-
-            {/* <div style={{ width: "auto" }} className="col">
+            <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="taurus" />
+              <ZodiacSign image="taurus" horoscope={generalSigns.Taurus} />
             </div>
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="gemini" />
+              <ZodiacSign image="gemini" horoscope={generalSigns.Gemini} />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="cancer" />
+              <ZodiacSign image="cancer" horoscope={generalSigns.Cancer} />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="leo" />
+              <ZodiacSign image="leo" horoscope={generalSigns.Leo} />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="virgo" />
+              <ZodiacSign image="virgo" horoscope={generalSigns.Virgo} />
             </div>
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="libra" />
+              <ZodiacSign image="libra" horoscope={generalSigns.Libra} />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="scorpio" />
+              <ZodiacSign image="scorpio" horoscope={generalSigns.Scorpio} />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="sagittarius" />
+              <ZodiacSign
+                image="sagittarius"
+                horoscope={generalSigns.Sagittarius}
+              />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="capricorn" />
+              <ZodiacSign
+                image="capricorn"
+                horoscope={generalSigns.Capricorn}
+              />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="aquarius" />
+              <ZodiacSign image="aquarius" horoscope={generalSigns.Aquarius} />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="pisces" />
-            </div> */}
+              <ZodiacSign image="pisces" horoscope={generalSigns.Pisces} />
+            </div>
           </div>
         </div>
         <ActionCall />
