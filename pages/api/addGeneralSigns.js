@@ -1,7 +1,7 @@
 import clientPromise from "../../lib/mongodb";
 import axios from "axios";
 
-const cron = require("node-cron");
+// const cron = require("node-cron");
 
 const signs = [
   "Aries",

@@ -35,7 +35,7 @@ export default function Home({ generalSigns }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main} id="main">
+      <main className={styles.main}>
         <div className="container">
           <div className="row">
             <div style={{ width: "auto" }} className="col">

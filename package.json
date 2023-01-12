@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest"
   },
   "dependencies": {
     "@next/font": "^13.1.1",
@@ -38,5 +39,9 @@
     "react-modal": "^3.16.1",
     "stripe": "^11.5.0",
     "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1",
+    "nock": "^13.3.0"
   }
 }

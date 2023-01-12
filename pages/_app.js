@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }) {
     require("bootstrap/dist/js/bootstrap.bundle.min.js");
   }, []);
   return (
-    <main className={font.className}>
+    <main id="main">
       <Navbar />
       <Header />
       <Component {...pageProps} />
