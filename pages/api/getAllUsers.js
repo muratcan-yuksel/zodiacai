@@ -29,7 +29,7 @@ export default async function getAllUsers(req, res) {
         try {
           await axios.post("http://localhost:3000/api/sendMail", {
             email: email,
-            subject: "Your daily horoscope",
+            subject: `${name} your daily horoscope is here! `,
             message: data.choices[0].text,
             name: name,
           });
