@@ -1,6 +1,9 @@
 import clientPromise from "../../lib/mongodb";
-
 import axios from "axios";
+
+// this function, contrary to its name, doesn't show the users.
+// It calls the users and gets their respective horoscopes
+// then sends email to each one of them
 
 export default async function getAllUsers(req, res) {
   const client = await clientPromise;
@@ -11,17 +14,19 @@ export default async function getAllUsers(req, res) {
     const users = await collection.find({}).toArray();
     const horoscopes = await Promise.allSettled(
       users.map(async (user) => {
-        const { name, birthdate, sign, email } = user;
+        const { name, birthdate, sign, email, timeOfBirth, birthLocation } =
+          user;
         const { data } = await axios.post(
           "http://localhost:3000/api/getUserHoroscopes",
           {
             sign,
+            name,
+            birthdate,
+            timeOfBirth,
+            birthLocation,
           }
         );
         try {
-          console.log(
-            "this is data bro" + JSON.stringify(data.choices[0].text)
-          );
           await axios.post("http://localhost:3000/api/sendMail", {
             email: email,
             subject: "Your daily horoscope",
