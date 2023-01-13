@@ -9,14 +9,12 @@ export default async function getAllUsers(req, res) {
 
   try {
     const users = await collection.find({}).toArray();
-    const horoscopes = await Promise.all(
+    const horoscopes = await Promise.allSettled(
       users.map(async (user) => {
         const { name, birthdate, sign, email } = user;
         const { data } = await axios.post(
           "http://localhost:3000/api/getUserHoroscopes",
           {
-            //   name,
-            //   birthdate,
             sign,
           }
         );
@@ -24,20 +22,28 @@ export default async function getAllUsers(req, res) {
           console.log(
             "this is data bro" + JSON.stringify(data.choices[0].text)
           );
+          await axios.post("http://localhost:3000/api/sendMail", {
+            email: email,
+            subject: "Your daily horoscope",
+            message: data.choices[0].text,
+            name: name,
+          });
         } catch (error) {
           console.log(error);
         }
         // send data to user.email
-        await axios.post("http://localhost:3000/api/sendMail", {
-          email: email,
-          subject: "Your daily horoscope",
-          message: data.choices[0].text,
-          name: name,
-        });
         return data;
       })
     );
-    res.status(200).json(horoscopes);
+
+    horoscopes.forEach((horoscope) => {
+      if (horoscope.status === "fulfilled") {
+        console.log(horoscope.value);
+      } else {
+        console.log(horoscope.reason);
+      }
+    });
+    res.status(200).json({ message: "Emails sent to all users" });
   } catch (error) {
     console.error(error);
   }
