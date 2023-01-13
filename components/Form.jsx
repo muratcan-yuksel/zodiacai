@@ -139,7 +139,7 @@ const MyForm = () => {
             .required("Required"),
         })}
         onSubmit={(values) => {
-          alert(JSON.stringify(values, null, 2));
+          // alert(JSON.stringify(values, null, 2));
           console.log(values.firstName);
           setCustomerInfo({
             firstName: values.firstName,
