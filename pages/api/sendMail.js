@@ -11,19 +11,29 @@ const transporter = nodemailer.createTransport(
   })
 );
 
-export default async function sendEmail(req, res) {
+async function sendMail(req, res) {
   const { email, subject, message, name } = req.body;
 
   try {
-    await transporter.sendMail({
-      to: email,
-      from: "mail@zodiacai.net",
-      html: message,
-      name: name,
-      subject: subject,
-    });
-    res.status(200).json({ message: "Email sent successfully" });
+    transporter.sendMail(
+      {
+        to: email,
+        from: "mail@zodiacai.net",
+        html: message,
+        name: name,
+        subject: subject,
+      },
+      (error, info) => {
+        if (error) {
+          res.status(500).json({ message: "Something went wrong" + error });
+        } else {
+          res.status(200).json({ message: "Email sent successfully" });
+        }
+      }
+    );
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: "Something went wrong" + error });
   }
 }
+
+export default sendMail;
