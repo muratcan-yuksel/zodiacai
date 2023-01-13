@@ -151,25 +151,6 @@ const MyForm = () => {
           });
           setIsFormVisible(false);
           setIsPaypalVisible(true);
-          // const sendDataToCheckout = async () => {
-          //   try {
-          //     const response = await axios.post(
-          //       "/api/create-checkout-session",
-          //       {
-          //         name: `${values.firstName} ${values.lastName}`,
-          //         email: values.email,
-          //         date: values.date,
-          //         time: values.time,
-          //         birthLocation: values.birthLocation,
-          //       }
-          //     );
-          //     console.log("hyyyyy" + response.data);
-          //     router.push(response.data);
-          //   } catch (error) {
-          //     console.error(error);
-          //   }
-          // };
-          // sendDataToCheckout();
         }}
       >
         <Form>

@@ -8,9 +8,6 @@ export default async function createUser(req, res) {
   const {
     name,
     email,
-    // customerId,
-    // createdAt,
-    // delinquent,
     birthDate,
     timeOfBirth,
     sign,
@@ -26,9 +23,6 @@ export default async function createUser(req, res) {
     const user = await collection.insertOne({
       name,
       email,
-      // customerId,
-      // createdAt,
-      // delinquent,
       birthDate,
       timeOfBirth,
       sign,

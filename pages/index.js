@@ -102,7 +102,7 @@ export default function Home({ generalSigns }) {
 export async function getServerSideProps() {
   try {
     const response = await axios.get(
-      "http://localhost:3000/api/getLastGeneralSignObject"
+      "https://www.zodiacai.net/api/getLastGeneralSignObject"
     );
     return {
       props: {

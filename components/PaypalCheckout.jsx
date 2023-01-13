@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 // import Checkout from "./Checkout";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import axios from "axios";
 
 const initialOptions = {
   "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
@@ -31,23 +32,26 @@ function PaypalCheckout({ props }) {
     console.log(data);
     console.log(props);
 
-    // const sendUserData = async () => {
-    // orderID: data.orderID,
-    //     subscriptionID: data.subscriptionID,
-    //     paymentSource: data.paymentSource,
-    //     facilitatorAccessToken: data.facilitatorAccessToken,
-    //   try {
-    //     await axios.post("http://localhost:3000/api/addUser", {
-    //       name: props.name,
-    //       email: props.email,
-    //       subject: "Welcome to ZodiacAI",
-    //       message: WelcomeMail.body,
-    //     });
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-    // sendUserData();
+    const sendUserData = async () => {
+      try {
+        await axios.post("https://www.zodiacai.net/api/addUser", {
+          firstName: props.firstName,
+          lastName: props.lastName,
+          email: props.email,
+          birthDate: props.birthDate,
+          birthTime: props.birthTime,
+          birthPlace: props.birthPlace,
+
+          orderID: data.orderID,
+          subscriptionID: data.subscriptionID,
+          paymentSource: data.paymentSource,
+          facilitatorAccessToken: data.facilitatorAccessToken,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    sendUserData();
   };
 
   return (

@@ -20,7 +20,7 @@ const signs = [
 
 const callGetSigns = async (sign) => {
   try {
-    const apiUrl = "http://localhost:3000/api/getSigns";
+    const apiUrl = "https://www.zodiacai.net/api/getSigns";
     const response = await axios.post(apiUrl, {
       sign: sign,
     });

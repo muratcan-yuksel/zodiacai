@@ -17,7 +17,7 @@ export default async function getAllUsers(req, res) {
         const { name, birthdate, sign, email, timeOfBirth, birthLocation } =
           user;
         const { data } = await axios.post(
-          "http://localhost:3000/api/getUserHoroscopes",
+          "https://www.zodiacai.net/api/getUserHoroscopes",
           {
             sign,
             name,
@@ -27,7 +27,7 @@ export default async function getAllUsers(req, res) {
           }
         );
         try {
-          await axios.post("http://localhost:3000/api/sendMail", {
+          await axios.post("https://www.zodiacai.net/api/sendMail", {
             email: email,
             subject: `${name} your daily horoscope is here! `,
             message: data.choices[0].text,
