@@ -12,7 +12,7 @@ import axios from "axios";
 import { backOff } from "exponential-backoff";
 // import useSWR from "swr";
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+// const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Home() {
   // const { data, error } = useSWR(
@@ -29,7 +29,7 @@ export default function Home() {
     setLoading(true);
     try {
       const res = await axios.get(
-        "http://localhost:3000/api/getLastGeneralSignObject"
+        "https://www.zodiacai.net/api/getLastGeneralSignObject"
       );
       setData(res.data.signsObject);
       console.log(res.data.signsObject);
