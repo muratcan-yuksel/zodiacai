@@ -21,7 +21,7 @@ export default async function getSigns(req, res) {
     let jsonData;
 
     const response = await axios.post(apiUrl, data, config);
-    // jsonData = response.data;
+    jsonData = response.data;
     // // check the status
     // console.log(response.status);
     // // check the data
