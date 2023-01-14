@@ -21,21 +21,21 @@ export default async function getSigns(req, res) {
     let jsonData;
 
     const response = await axios.post(apiUrl, data, config);
-    jsonData = response.data;
-    // check the status
-    console.log(response.status);
-    // check the data
-    console.log(response.data);
-    //return the data
+    // jsonData = response.data;
+    // // check the status
+    // console.log(response.status);
+    // // check the data
+    // console.log(response.data);
+    // //return the data
     res.status(200).json(jsonData);
   } catch (error) {
-    //check the error status
-    console.log(error.response.status);
-    //check the error data
-    console.log(error.response.data);
-    //check the error
-    console.log(error);
-    // return the error
+    // //check the error status
+    // console.log(error.response.status);
+    // //check the error data
+    // console.log(error.response.data);
+    // //check the error
+    // console.log(error);
+    // // return the error
     res.status(500).json({ error: error.response.data });
   }
 }

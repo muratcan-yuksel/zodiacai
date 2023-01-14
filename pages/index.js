@@ -10,20 +10,42 @@ import PriceCard from "../components/PriceCard";
 import Form from "../components/Form";
 import axios from "axios";
 import { backOff } from "exponential-backoff";
-import useSWR from "swr";
+// import useSWR from "swr";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Home() {
-  const { data, error } = useSWR(
-    "http://localhost:3000/api/getLastGeneralSignObject",
-    fetcher
-  );
+  // const { data, error } = useSWR(
+  //   "http://localhost:3000/api/getLastGeneralSignObject",
+  //   fetcher
+  // );
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  if (error) return <div>Failed to load</div>;
-  if (!data) return <div>Loading...</div>;
+  // if (error) return <div>Failed to load</div>;
+  // if (!data) return <div>Loading...</div>;
 
-  console.log(data);
+  async function fetchData() {
+    setLoading(true);
+    try {
+      const res = await axios.get(
+        "http://localhost:3000/api/getLastGeneralSignObject"
+      );
+      setData(res.data.signsObject);
+      console.log(res.data.signsObject);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className={styles.container}>
@@ -41,63 +63,51 @@ export default function Home() {
           <div className="row">
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="aries" horoscope={data.signsObject.Aries} />
+              <ZodiacSign image="aries" horoscope={data.Aries} />
             </div>
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="taurus" horoscope={data.signsObject.Taurus} />
+              <ZodiacSign image="taurus" horoscope={data.Taurus} />
             </div>
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="gemini" horoscope={data.signsObject.Gemini} />
+              <ZodiacSign image="gemini" horoscope={data.Gemini} />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="cancer" horoscope={data.signsObject.Cancer} />
+              <ZodiacSign image="cancer" horoscope={data.Cancer} />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="leo" horoscope={data.signsObject.Leo} />
+              <ZodiacSign image="leo" horoscope={data.Leo} />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="virgo" horoscope={data.signsObject.Virgo} />
+              <ZodiacSign image="virgo" horoscope={data.Virgo} />
             </div>
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="libra" horoscope={data.signsObject.Libra} />
+              <ZodiacSign image="libra" horoscope={data.Libra} />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign
-                image="scorpio"
-                horoscope={data.signsObject.Scorpio}
-              />
+              <ZodiacSign image="scorpio" horoscope={data.Scorpio} />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign
-                image="sagittarius"
-                horoscope={data.signsObject.Sagittarius}
-              />
+              <ZodiacSign image="sagittarius" horoscope={data.Sagittarius} />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign
-                image="capricorn"
-                horoscope={data.signsObject.Capricorn}
-              />
+              <ZodiacSign image="capricorn" horoscope={data.Capricorn} />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign
-                image="aquarius"
-                horoscope={data.signsObject.Aquarius}
-              />
+              <ZodiacSign image="aquarius" horoscope={data.Aquarius} />
             </div>{" "}
             <div style={{ width: "auto" }} className="col">
               {" "}
-              <ZodiacSign image="pisces" horoscope={data.signsObject.Pisces} />
+              <ZodiacSign image="pisces" horoscope={data.Pisces} />
             </div>
           </div>
         </div>
@@ -105,23 +115,3 @@ export default function Home() {
     </div>
   );
 }
-
-// export async function getServerSideProps() {
-//   try {
-//     const response = await axios.get(
-//       "https://www.zodiacai.net/api/getLastGeneralSignObject"
-//     );
-//     return {
-//       props: {
-//         generalSigns: response.data.signsObject,
-//       },
-//     };
-//   } catch (error) {
-//     console.error(error);
-//     return {
-//       props: {
-//         error: error.message,
-//       },
-//     };
-//   }
-// }

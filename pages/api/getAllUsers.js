@@ -27,6 +27,7 @@ export default async function getAllUsers(req, res) {
           }
         );
         try {
+          console.log(data.choices[0].text);
           await axios.post("https://www.zodiacai.net/api/sendMail", {
             email: email,
             subject: `${name} your daily horoscope is here! `,
