@@ -10,6 +10,7 @@ import PriceCard from "../components/PriceCard";
 import Form from "../components/Form";
 import axios from "axios";
 import { backOff } from "exponential-backoff";
+import EmailExample from "../components/EmailExample";
 // import useSWR from "swr";
 
 // const fetcher = (...args) => fetch(...args).then((res) => res.json());

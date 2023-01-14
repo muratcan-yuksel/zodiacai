@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import ActionCall from "../components/ActionCall";
 import Form from "../components/Form";
+import EmailExample from "../components/EmailExample";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -19,6 +20,8 @@ function MyApp({ Component, pageProps }) {
       <Header />
       <Component {...pageProps} />
       <ActionCall />
+      <EmailExample />
+
       <Form />
       <footer className="footer">
         <p> 2023 Zodiac AI. All rights reserved.</p>{" "}
