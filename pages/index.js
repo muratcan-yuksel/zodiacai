@@ -33,7 +33,7 @@ export default function Home() {
         "https://www.zodiacai.net/api/getLastGeneralSignObject"
       );
       setData(res.data.signsObject);
-      console.log(res.data.signsObject);
+      // console.log(res.data.signsObject);
     } catch (err) {
       console.error(err);
     } finally {
