@@ -29,7 +29,7 @@
     "micro": "^10.0.1",
     "micro-cors": "^0.1.1",
     "mongodb": "^4.13.0",
-    "mongoose": "^6.8.2",
+    "mongoose": "^6.11.3",
     "next": "13.1.1",
     "node-cron": "^3.0.2",
     "nodemailer": "^6.8.0",
